@@ -1,13 +1,13 @@
 package game.entity.component;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 import game.entity.Camera;
 import game.entity.Entity;
 
-import java.awt.Graphics;
-
 public abstract class Component {
 
-	private Entity parent;
+	protected Entity parent;
 	private boolean initialized = false;
 
 	public Entity getParent() {
@@ -29,7 +29,7 @@ public abstract class Component {
 	public void update(Camera camera) {
 	}
 
-	public void render(Graphics g, Camera camera) {
+	public void render(Camera camera, SpriteBatch batch) {
 	}
 
 }

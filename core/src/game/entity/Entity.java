@@ -4,9 +4,9 @@ import game.entity.component.Component;
 import game.world.EntityManager;
 import game.world.Map;
 
-import java.awt.Graphics;
 import java.util.ArrayList;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
 public abstract class Entity {
@@ -33,10 +33,10 @@ public abstract class Entity {
 		}
 	}
 
-	public void render(Graphics g, Camera camera) {
+	public void render(Camera camera, SpriteBatch batch) {
 		for (int i = 0; i < components.size(); i++) 
 			if (components.get(i).isInitialized()) 
-				components.get(i).render(g, camera);
+				components.get(i).render(camera, batch);
 	}
 
 	public void addComponent(Component component) {

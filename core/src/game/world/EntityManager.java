@@ -3,9 +3,9 @@ package game.world;
 import game.entity.Camera;
 import game.entity.Entity;
 
-import java.awt.Graphics;
 import java.util.ArrayList;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
 public class EntityManager {
@@ -13,10 +13,13 @@ public class EntityManager {
 	private ArrayList<Entity> entities;
 	private Map map;
 	
+	private SpriteBatch batch;
+	
 	public EntityManager(Map map) {
 		this.map = map;
 		
 		entities = new ArrayList<Entity>();
+		batch = new SpriteBatch();
 	}
 
 	public void update(Camera camera) {
@@ -31,9 +34,14 @@ public class EntityManager {
 		}
 	}
 
-	public void render(Graphics g, Camera camera) {
+	public void render(Camera camera) {
+		camera.projectBatch(batch);
+		batch.begin();
+		
 		for (int i = 0; i < entities.size(); i++)
-			entities.get(i).render(g, camera);
+			entities.get(i).render(camera, batch);
+		
+		batch.end();
 	}
 
 	public void addEntity(Entity e) {
