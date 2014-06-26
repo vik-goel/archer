@@ -49,7 +49,7 @@ public class Clickable extends Component {
 		
 		if (parent.getBounds().contains(mousePos)) {
 			selected = true;
-			clicked = !wasSelected;
+			clicked = true;
 		} else {
 			this.wasSelected = wasSelected;
 		}
@@ -90,6 +90,11 @@ public class Clickable extends Component {
 			wasSelected = true;
 		
 		selected = clicked = false;
+	}
+	
+	public void select() {
+		selected = clicked = true;
+		wasSelected = false;
 	}
 
 }

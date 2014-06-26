@@ -17,7 +17,7 @@ public class ClickAttack extends Component {
 	private Color attackColor;
 
 	private boolean selectingAngle = false;
-	private boolean isAttacking = false;
+	private boolean attacking = false;
 	private float radius;
 	private float attackAngle = 0;
 	private float fov;
@@ -34,18 +34,13 @@ public class ClickAttack extends Component {
 		super.init(camera);
 
 		clickable = parent.getComponent(Clickable.class);
-
-		if (clickable == null) {
-			clickable = new Clickable();
-			parent.addComponent(clickable);
-		}
 	}
 
 	public void update(Camera camera) {
 		super.update(camera);
 
 		if (clickable.isClicked())
-			isAttacking = false;
+			attacking = false;
 		
 		if (!clickable.isSelected()) {
 			selectingAngle = false;
@@ -53,10 +48,10 @@ public class ClickAttack extends Component {
 		}
 
 		if (Gdx.input.isButtonPressed(1) && Gdx.input.justTouched()) {
-			if (isAttacking && selectingAngle)
+			if (attacking && selectingAngle)
 				selectingAngle = false;
 			else {
-				isAttacking = true;
+				attacking = true;
 				selectingAngle = true;
 			}
 		}
@@ -73,7 +68,7 @@ public class ClickAttack extends Component {
 	public void render(Camera camera, SpriteBatch batch) {
 		super.render(camera, batch);
 
-		if (!isAttacking)
+		if (!attacking)
 			return;
 		
 		Gdx.gl.glEnable(GL20.GL_BLEND);
@@ -89,5 +84,13 @@ public class ClickAttack extends Component {
 		SHAPE_RENDERER.end();
 		
 		Gdx.gl.glDisable(GL20.GL_BLEND);
+	}
+	
+	public boolean isAttacking() {
+		return attacking;
+	}
+	
+	public float getAttackAngle() {
+		return attackAngle;
 	}
 }

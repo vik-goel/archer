@@ -27,6 +27,9 @@ public class Render extends Component {
 		batch.end();
 	}
 	
+	public void setSprite(Sprite sprite) {
+		this.sprite = sprite;
+	}
 	
 	
 }

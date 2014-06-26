@@ -32,19 +32,13 @@ public class ClickMove extends Component {
 		super.init(camera);
 
 		clickable = parent.getComponent(Clickable.class);
-
-		if (clickable == null) {
-			clickable = new Clickable();
-			parent.addComponent(clickable);
-		}
-
 		resetMoveRadiusCenter();
 	}
 
 	public void update(Camera camera) {
 		super.update(camera);
 
-		if (clickable.isSelected() && !Gdx.input.isButtonPressed(1))
+		if (clickable.isClicked())
 			movingEnabled = true;
 		
 		if (!Gdx.input.isButtonPressed(0))
