@@ -1,6 +1,7 @@
 package game.entity.component;
 
 import game.entity.Camera;
+import game.world.PhaseManager;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
@@ -35,6 +36,9 @@ public class SquadSprite extends Component {
 
 	public void update(Camera camera) {
 		super.update(camera);
+		
+		if (!PhaseManager.isPlayerPhase())
+			return;
 		
 		if (clickAttack.isAttacking()) {
 			float angle = clickAttack.getAttackAngle();

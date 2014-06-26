@@ -1,6 +1,7 @@
 package game.entity.component;
 
 import game.entity.Camera;
+import game.world.PhaseManager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -16,6 +17,7 @@ public class ClickAttack extends Component {
 
 	private Color attackColor;
 
+	private boolean setAttack = false;
 	private boolean selectingAngle = false;
 	private boolean attacking = false;
 	private float radius;
@@ -39,18 +41,27 @@ public class ClickAttack extends Component {
 	public void update(Camera camera) {
 		super.update(camera);
 
-		if (clickable.isClicked())
+		if (!PhaseManager.isPlayerPhase())
+			return;
+		
+		if (clickable.isClicked()) {
 			attacking = false;
+			setAttack = false;
+		}
 		
 		if (!clickable.isSelected()) {
+			if (selectingAngle) 
+				setAttack = true;
+			
 			selectingAngle = false;
 			return;
 		}
 
 		if (Gdx.input.isButtonPressed(1) && Gdx.input.justTouched()) {
-			if (attacking && selectingAngle)
+			if (attacking && selectingAngle) {
 				selectingAngle = false;
-			else {
+				setAttack = true;
+			} else {
 				attacking = true;
 				selectingAngle = true;
 			}
@@ -92,5 +103,9 @@ public class ClickAttack extends Component {
 	
 	public float getAttackAngle() {
 		return attackAngle;
+	}
+	
+	public boolean hasSetAttack() {
+		return setAttack;
 	}
 }

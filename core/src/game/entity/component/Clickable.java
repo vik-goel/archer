@@ -1,6 +1,7 @@
 package game.entity.component;
 
 import game.entity.Camera;
+import game.world.PhaseManager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -36,6 +37,9 @@ public class Clickable extends Component {
 	public void update(Camera camera) {
 		super.update(camera);
 
+		if (!PhaseManager.isPlayerPhase())
+			return;
+		
 		wasSelected = false;
 		clicked = false;
 		
