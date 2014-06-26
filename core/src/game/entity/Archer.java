@@ -1,6 +1,6 @@
 package game.entity;
 
-import game.entity.component.Clickable;
+import game.entity.component.ClickMove;
 import game.entity.component.Render;
 
 import com.badlogic.gdx.graphics.Texture;
@@ -18,7 +18,7 @@ public class Archer extends Entity {
 		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		addComponent(new Render(new Sprite(texture, 0, 128, 64, 64)));
 		
-		addComponent(new Clickable());
+		addComponent(new ClickMove(8));
 	}
 
 }

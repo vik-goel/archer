@@ -56,10 +56,11 @@ public abstract class Entity {
 		return bounds;
 	}
 
-	public Component getComponent(Class<? extends Component> component) {
-		for (int i = 0; i < components.size(); i++) {
-			if (components.get(i).getClass().equals(component)) return components.get(i);
-		}
+	@SuppressWarnings("unchecked")
+	public <T> T getComponent(Class<T> component) {
+		for (int i = 0; i < components.size(); i++) 
+			if (components.get(i).getClass().equals(component)) 
+				return (T) components.get(i);
 		
 		return null;
 	}
