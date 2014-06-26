@@ -1,6 +1,8 @@
 package game.entity;
 
 import game.entity.component.Component;
+import game.world.EntityManager;
+import game.world.Map;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
@@ -13,7 +15,9 @@ public abstract class Entity {
 	private boolean removed = false;
 	
 	protected Rectangle bounds;
-
+	protected EntityManager manager;
+	protected Map map;
+	
 	public Entity(Rectangle bounds) {
 		components = new ArrayList<Component>();
 		this.bounds = bounds;
@@ -58,6 +62,22 @@ public abstract class Entity {
 		}
 		
 		return null;
+	}
+
+	public EntityManager getManager() {
+		return manager;
+	}
+
+	public void setManager(EntityManager manager) {
+		this.manager = manager;
+	}
+
+	public Map getMap() {
+		return map;
+	}
+
+	public void setMap(Map map) {
+		this.map = map;
 	}
 
 }

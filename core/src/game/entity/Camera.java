@@ -12,7 +12,7 @@ public class Camera extends Entity {
 	
 	public Camera(Vector2 size) {
 		super(new Rectangle(0, 0, size.x, size.y));
-		oldPos = new Vector2(size.x / 2, size.y / 2);
+		oldPos = new Vector2(-size.x / 2, -size.y / 2);
 		orthoCamera = new OrthographicCamera(bounds.width, bounds.height);
 	}
 	
@@ -20,7 +20,7 @@ public class Camera extends Entity {
 		super.update(camera);
 		
 		if (oldPos.x != bounds.x || oldPos.y != bounds.y) {
-			orthoCamera.translate(oldPos.sub(bounds.x, bounds.y));
+			orthoCamera.translate(bounds.x - oldPos.x, bounds.y - oldPos.y);
 			orthoCamera.update();
 			oldPos.set(bounds.x, bounds.y);
 		}

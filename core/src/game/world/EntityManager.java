@@ -11,8 +11,11 @@ import com.badlogic.gdx.math.Rectangle;
 public class EntityManager {
 
 	private ArrayList<Entity> entities;
-
-	public EntityManager() {
+	private Map map;
+	
+	public EntityManager(Map map) {
+		this.map = map;
+		
 		entities = new ArrayList<Entity>();
 	}
 
@@ -35,6 +38,8 @@ public class EntityManager {
 
 	public void addEntity(Entity e) {
 		entities.add(e);
+		e.setManager(this);
+		e.setMap(map);
 	}
 
 	public ArrayList<Entity> getEntitiesWithinArea(Rectangle area) {
