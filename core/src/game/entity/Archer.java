@@ -1,8 +1,10 @@
 package game.entity;
 
+import game.entity.component.ClickAttack;
 import game.entity.component.ClickMove;
 import game.entity.component.Render;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -19,6 +21,7 @@ public class Archer extends Entity {
 		addComponent(new Render(new Sprite(texture, 0, 128, 64, 64)));
 		
 		addComponent(new ClickMove(8));
+		addComponent(new ClickAttack(200, 120, new Color(1f, 0f, 0f, 0.5f)));
 	}
 
 }

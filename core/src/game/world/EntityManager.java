@@ -36,12 +36,9 @@ public class EntityManager {
 
 	public void render(Camera camera) {
 		camera.projectBatch(batch);
-		batch.begin();
 		
 		for (int i = 0; i < entities.size(); i++)
 			entities.get(i).render(camera, batch);
-		
-		batch.end();
 	}
 
 	public void addEntity(Entity e) {

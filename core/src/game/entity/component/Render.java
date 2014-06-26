@@ -21,7 +21,10 @@ public class Render extends Component {
 
 	public void render(Camera camera, SpriteBatch batch) {
 		super.render(camera, batch);
+		
+		batch.begin();
 		sprite.draw(batch);
+		batch.end();
 	}
 	
 	

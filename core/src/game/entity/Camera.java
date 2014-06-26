@@ -64,4 +64,10 @@ public class Camera extends Entity {
 		Vector2 mousePos = new Vector2(Gdx.input.getX(), Gdx.input.getY());
 		return toWorldPos(mousePos);
 	}
+	
+	public Vector2 toScreenPos(Vector2 worldPos) {
+		Vector3 worldPos3 = new Vector3(worldPos.x, worldPos.y, 0);
+		Vector3 screenPos3 = orthoCamera.project(worldPos3);
+		return new Vector2(screenPos3.x, screenPos3.y);
+	}
 }
