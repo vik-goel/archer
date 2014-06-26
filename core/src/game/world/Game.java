@@ -1,7 +1,7 @@
 package game.world;
 
 import game.entity.Camera;
-import game.entity.TestEntity;
+import game.entity.Archer;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -20,7 +20,7 @@ public class Game extends ApplicationAdapter {
 		
 		manager = new EntityManager(map);
 		manager.addEntity(camera = new Camera(new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight())));
-		manager.addEntity(new TestEntity(new Vector2(100, 100)));
+		manager.addEntity(new Archer(new Vector2(100, 100)));
 	}
 
 	public void render() {

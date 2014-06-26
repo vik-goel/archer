@@ -16,6 +16,7 @@ public class Render extends Component {
 	public void update(Camera camera) {
 		super.update(camera);
 		sprite.setPosition(parent.getBounds().x, parent.getBounds().y);
+		sprite.setSize(parent.getBounds().width, parent.getBounds().height);
 	}
 
 	public void render(Camera camera, SpriteBatch batch) {

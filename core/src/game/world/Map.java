@@ -2,8 +2,6 @@ package game.world;
 
 import game.entity.Camera;
 
-import java.util.Random;
-
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -16,16 +14,14 @@ public class Map {
 	private Tile[][] tiles;
 	
 	public Map(int width, int height) {
-		tileset = new Texture("tilesheet.png");
+		tileset = new Texture("ground.png");
 		batch = new SpriteBatch();
 		
 		tiles = new Tile[width][height];
 		
-		Random random = new Random();
-		
 		for (int i = 0; i < tiles.length; i++) {
 			for (int j = 0; j < tiles[0].length; j++) {
-				Sprite sprite = new Sprite(tileset, random.nextInt(4) * 64, 0, 64, 64);
+				Sprite sprite = new Sprite(tileset);
 				sprite.setSize(Tile.SIZE, Tile.SIZE);
 				sprite.setPosition(i * Tile.SIZE, j * Tile.SIZE);
 				

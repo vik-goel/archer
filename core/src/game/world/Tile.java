@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Tile {
 	
-	public static final int SIZE = 32;
+	public static final int SIZE = 64;
 
 	private Sprite sprite;
 	
