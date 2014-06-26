@@ -12,7 +12,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class ClickAttack extends Component {
 
-	private static ShapeRenderer shapeRenderer = new ShapeRenderer();
+	private static final ShapeRenderer SHAPE_RENDERER = new ShapeRenderer();
 
 	private Color attackColor;
 
@@ -44,8 +44,10 @@ public class ClickAttack extends Component {
 	public void update(Camera camera) {
 		super.update(camera);
 
-		if (!clickable.isSelected()) {
+		if (clickable.isClicked())
 			isAttacking = false;
+		
+		if (!clickable.isSelected()) {
 			selectingAngle = false;
 			return;
 		}
@@ -81,10 +83,10 @@ public class ClickAttack extends Component {
 	    parent.getBounds().getCenter(parentCenter);
 	    parentCenter = camera.toScreenPos(parentCenter);
 	    
-		shapeRenderer.begin(ShapeType.Filled);
-		shapeRenderer.setColor(attackColor);
-		shapeRenderer.arc(parentCenter.x, parentCenter.y, radius, attackAngle - fov / 2, fov);
-		shapeRenderer.end();
+		SHAPE_RENDERER.begin(ShapeType.Filled);
+		SHAPE_RENDERER.setColor(attackColor);
+		SHAPE_RENDERER.arc(parentCenter.x, parentCenter.y, radius, attackAngle - fov / 2, fov);
+		SHAPE_RENDERER.end();
 		
 		Gdx.gl.glDisable(GL20.GL_BLEND);
 	}

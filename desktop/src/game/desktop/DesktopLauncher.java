@@ -13,6 +13,7 @@ public class DesktopLauncher {
 		config.height = 600;
 		config.title = "Archer";
 		config.resizable = false;
+		config.samples = 4;
 		
 		new LwjglApplication(new Game(), config);
 	}
