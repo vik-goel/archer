@@ -13,8 +13,8 @@ import com.badlogic.gdx.math.Vector2;
 public class Clickable extends Component {
 
 	private static final ShapeRenderer SHAPE_RENDERER = new ShapeRenderer();
+	private static final Color SELECTED_COLOR = new Color(0f, 1f, 0f, 1f);
 	
-	private Color selectedColor;
 	private boolean drawSelectedCircle = false;
 	private float xOffs, yOffs, circleWidth, circleHeight;
 	
@@ -25,9 +25,8 @@ public class Clickable extends Component {
 	public Clickable() {
 	}
 	
-	public Clickable(Color selectedColor, float xOffs, float yOffs, float circleWidth, float circleHeight) {
+	public Clickable(float xOffs, float yOffs, float circleWidth, float circleHeight) {
 		this.drawSelectedCircle = true;
-		this.selectedColor = selectedColor;
 		this.xOffs = xOffs;
 		this.yOffs = yOffs;
 		this.circleWidth = circleWidth;
@@ -72,7 +71,7 @@ public class Clickable extends Component {
 		Gdx.gl20.glLineWidth(1);
 		
 		SHAPE_RENDERER.begin(ShapeType.Line);
-		SHAPE_RENDERER.setColor(selectedColor);
+		SHAPE_RENDERER.setColor(SELECTED_COLOR);
 		SHAPE_RENDERER.ellipse(parentCenter.x + xOffs, parentCenter.y + yOffs, circleWidth, circleHeight);
 		SHAPE_RENDERER.end();
 	}

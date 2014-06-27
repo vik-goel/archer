@@ -50,17 +50,17 @@ public class ClickAttack extends Component {
 		}
 		
 		if (!clickable.isSelected()) {
-			if (selectingAngle) 
-				setAttack = true;
-			
-			selectingAngle = false;
-			return;
+			if (selectingAngle)
+				clickable.select();
+			else 
+				return;
 		}
 
 		if (Gdx.input.isButtonPressed(1) && Gdx.input.justTouched()) {
 			if (attacking && selectingAngle) {
 				selectingAngle = false;
 				setAttack = true;
+				clickable.deselect();
 			} else {
 				attacking = true;
 				selectingAngle = true;
@@ -91,7 +91,7 @@ public class ClickAttack extends Component {
 	    
 		SHAPE_RENDERER.begin(ShapeType.Filled);
 		SHAPE_RENDERER.setColor(attackColor);
-		SHAPE_RENDERER.arc(parentCenter.x, parentCenter.y, radius, attackAngle - fov / 2, fov);
+		SHAPE_RENDERER.arc(parentCenter.x, parentCenter.y, radius, attackAngle - fov / 2, fov, 25);
 		SHAPE_RENDERER.end();
 		
 		Gdx.gl.glDisable(GL20.GL_BLEND);

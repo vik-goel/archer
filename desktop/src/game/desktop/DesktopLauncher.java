@@ -14,6 +14,12 @@ public class DesktopLauncher {
 		config.title = "Archer";
 		config.resizable = false;
 		config.samples = 4;
+		config.backgroundFPS = -1;
+		config.vSyncEnabled = true;
+		config.useGL30 = false;
+		config.allowSoftwareMode = true;
+		config.x = -1;
+		config.y = -1;
 		
 		new LwjglApplication(new Game(), config);
 	}
