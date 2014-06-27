@@ -2,50 +2,41 @@ package game.world;
 
 import game.entity.Camera;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 public class Map {
+	
+	public static final float TILE_SIZE = 32;
 
-	private Texture tileset;
-	private SpriteBatch batch;
+	private TiledMap tiledMap;
+	private OrthogonalTiledMapRenderer renderer;
+	private TiledMapTileLayer wallLayer;
 	
-	private Tile[][] tiles;
-	
-	public Map(int width, int height) {
-		tileset = new Texture("ground.png");
-		batch = new SpriteBatch();
+	public Map(String tmxPath) {
+		tiledMap = new TmxMapLoader().load(tmxPath);
+		renderer = new OrthogonalTiledMapRenderer(tiledMap, 2);
 		
-		tiles = new Tile[width][height];
-		
-		for (int i = 0; i < tiles.length; i++) {
-			for (int j = 0; j < tiles[0].length; j++) {
-				Sprite sprite = new Sprite(tileset);
-				sprite.setSize(Tile.SIZE, Tile.SIZE);
-				sprite.setPosition(i * Tile.SIZE, j * Tile.SIZE);
-				
-				tiles[i][j] = new Tile(sprite);
-			}
-		}
+		wallLayer = (TiledMapTileLayer) tiledMap.getLayers().get("walls");
 	}
 	
 	public void render(Camera camera) {
-		camera.projectBatch(batch);
-		batch.begin();
-		
-		for (int i = 0; i < tiles.length; i++) 
-			for (int j = 0; j < tiles[0].length; j++) 
-				tiles[i][j].render(batch);
-		
-		batch.end();
+		camera.projectMap(renderer);
+		renderer.render();
+	}
+	
+	public boolean isSolid(int x, int y) {
+		return wallLayer.getCell(x, y) != null;
 	}
 	
 	public int getWidth() {
-		return tiles.length;
+		return wallLayer.getWidth();
 	}
 	
-	public int getHeight() {
-		return tiles[0].length;
+	public int getHeight()  {
+		return wallLayer.getHeight();
 	}
+	
 }

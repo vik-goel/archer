@@ -1,10 +1,11 @@
 package game.entity;
 
-import game.world.Tile;
+import game.world.Map;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -32,14 +33,14 @@ public class Camera extends Entity {
 		if (bounds.x < 0)
 			bounds.x = 0;
 
-		else if (bounds.x + bounds.width > map.getWidth() * Tile.SIZE)
-			bounds.x = map.getWidth()  * Tile.SIZE - bounds.width;
+		else if (bounds.x + bounds.width > map.getWidth() * Map.TILE_SIZE)
+			bounds.x = map.getWidth()  * Map.TILE_SIZE - bounds.width;
 
 		if (bounds.y < 0)
 			bounds.y = 0;
 
-		else if (bounds.y + bounds.height > map.getHeight() * Tile.SIZE)
-			bounds.y = map.getHeight()  * Tile.SIZE - bounds.height;
+		else if (bounds.y + bounds.height > map.getHeight() * Map.TILE_SIZE)
+			bounds.y = map.getHeight()  * Map.TILE_SIZE - bounds.height;
 	}
 
 	private void updateCameraPosition() {
@@ -52,6 +53,10 @@ public class Camera extends Entity {
 
 	public void projectBatch(SpriteBatch batch) {
 		batch.setProjectionMatrix(orthoCamera.combined);
+	}
+	
+	public void projectMap(OrthogonalTiledMapRenderer renderer) {
+		renderer.setView(orthoCamera);
 	}
 	
 	public Vector2 toWorldPos(Vector2 screenPos) {
