@@ -5,7 +5,6 @@ import game.entity.Skeleton;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
 
@@ -37,17 +36,6 @@ public class Game extends ApplicationAdapter {
 	}
 	
 	private void updateWorld() {
-		float cameraSpeed = 4;
-		
-		if (Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W))
-			camera.getBounds().y += cameraSpeed;
-		if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A))
-			camera.getBounds().x -= cameraSpeed;
-		if (Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S))
-			camera.getBounds().y -= cameraSpeed;
-		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D))
-			camera.getBounds().x += cameraSpeed;
-	
 		manager.update(camera);
 		squad.update();
 	}

@@ -3,6 +3,7 @@ package game.entity;
 import game.world.Map;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -14,6 +15,7 @@ public class Camera extends Entity {
 
 	private OrthographicCamera orthoCamera;
 	private Vector2 oldPos;
+	private float cameraSpeed = 4;
 
 	public Camera(Vector2 size) {
 		super(new Rectangle(0, 0, size.x, size.y));
@@ -25,8 +27,20 @@ public class Camera extends Entity {
 	public void update(Camera camera) {
 		super.update(camera);
 
+		moveCameraBasedOnInput();
 		positionCameraInsideMap();
 		updateCameraPosition();
+	}
+
+	private void moveCameraBasedOnInput() {
+		if (Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W))
+			bounds.y += cameraSpeed;
+		if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A))
+			bounds.x -= cameraSpeed;
+		if (Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S))
+			bounds.y -= cameraSpeed;
+		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D))
+			bounds.x += cameraSpeed;
 	}
 
 	private void positionCameraInsideMap() {
