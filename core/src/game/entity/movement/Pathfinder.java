@@ -12,12 +12,24 @@ public class Pathfinder {
 	private static final double SQRT_2 = Math.sqrt(2);
 
 	public static ArrayList<Vector2> aStarSearch(Entity start, Entity goal) {
-		int startX = (int) (start.getBounds().x / Map.TILE_SIZE);
-		int startY = (int) (start.getBounds().y / Map.TILE_SIZE);
-		int goalX = (int) (goal.getBounds().x / Map.TILE_SIZE);
-		int goalY = (int) (goal.getBounds().y / Map.TILE_SIZE);
+		Map map = start.getMap();
+		
+		int startX = (int) Math.floor(start.getBounds().x / Map.TILE_SIZE);
+		int startY = (int) Math.floor(start.getBounds().y / Map.TILE_SIZE);
+		int goalX = (int) Math.floor(goal.getBounds().x / Map.TILE_SIZE);
+		int goalY = (int) Math.floor(goal.getBounds().y / Map.TILE_SIZE);
 
-		return aStarSearch(start.getMap(), startX, startY, goalX, goalY);
+		if (map.isSolid(startX, startY)) {
+			startX = (int) Math.ceil(start.getBounds().x / Map.TILE_SIZE);
+			startY = (int) Math.ceil(start.getBounds().y / Map.TILE_SIZE);
+		}
+		
+		if (map.isSolid(goalX, goalY)) {
+			goalX = (int) Math.ceil(goal.getBounds().x / Map.TILE_SIZE);
+			goalY = (int) Math.ceil(goal.getBounds().y / Map.TILE_SIZE);
+		}
+		
+		return aStarSearch(map, startX, startY, goalX, goalY);
 	}
 
 	private static ArrayList<Vector2> aStarSearch(Map map, int startX, int startY, int goalX, int goalY) {

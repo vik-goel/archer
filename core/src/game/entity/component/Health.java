@@ -27,8 +27,8 @@ public class Health extends Component {
 	public void render(Camera camera, SpriteBatch batch) {
 		super.render(camera, batch);
 		
-		float x = parent.getBounds().x + (parent.getBounds().width - barWidth) / 2;
-		float y = parent.getBounds().y + parent.getBounds().height;
+		float x = parent.getBounds().x + (parent.getBounds().width - barWidth) / 2 - camera.getBounds().x;
+		float y = parent.getBounds().y + parent.getBounds().height - camera.getBounds().y;
 		
 		SHAPE_RENDERER.begin(ShapeType.Filled);
 		

@@ -18,6 +18,9 @@ public class SkeletonPathFollower extends Component {
 	}
 
 	public void setPath(ArrayList<Vector2> path) {
+		if (this.path == path)
+			return;
+		
 		this.path = path;
 		pathIndex = 0;
 	}
@@ -27,7 +30,6 @@ public class SkeletonPathFollower extends Component {
 			return;
 
 		if (pathIndex >= path.size()) {
-			path = null;
 			return;
 		}
 

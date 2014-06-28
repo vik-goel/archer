@@ -37,7 +37,7 @@ public class ClickMove extends Component {
 
 	public void update(Camera camera) {
 		super.update(camera);
-		
+
 		if (!PhaseManager.isPlayerPhase())
 			return;
 
@@ -45,11 +45,11 @@ public class ClickMove extends Component {
 			movingEnabled = true;
 			canMove = true;
 		}
-		
+
 		if (!Gdx.input.isButtonPressed(0))
 			movingEnabled = false;
-		
-		if (Gdx.input.isButtonPressed(1) && Gdx.input.justTouched()) 
+
+		if (Gdx.input.isButtonPressed(1) && Gdx.input.justTouched())
 			canMove = !canMove;
 
 		if (movingEnabled && canMove) {
@@ -59,17 +59,12 @@ public class ClickMove extends Component {
 			parent.getBounds().getCenter(parentCenter);
 
 			Vector2 moveAmount = mousePos.sub(parentCenter);
-			float length = moveAmount.len();
-			moveAmount.nor();
-			
-			for (int i = 0; i < length; i++) {
-				moveAmount = moveAmount.scl(Collision.collision(parent, moveAmount));
-				
-				Vector2 newCenterPos = parentCenter.add(moveAmount);
+			moveAmount = moveAmount.scl(Collision.collision(parent, moveAmount));
 
-				if (newCenterPos.dst(moveRadiusCenter) <= moveRadius) 
-					parent.getBounds().setPosition(parent.getBounds().x + moveAmount.x, parent.getBounds().y + moveAmount.y);
-			}
+			Vector2 newCenterPos = parentCenter.add(moveAmount);
+
+			if (newCenterPos.dst(moveRadiusCenter) <= moveRadius)
+				parent.getBounds().setPosition(parent.getBounds().x + moveAmount.x, parent.getBounds().y + moveAmount.y);
 		}
 	}
 

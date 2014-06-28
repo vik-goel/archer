@@ -15,6 +15,7 @@ public class SkeletonGroup extends Entity {
 	private Squad squad;
 	private Entity target;
 	private ArrayList<Entity> group;
+	private ArrayList<Vector2> path;
 	
 	private boolean wasEnemyPhase = false;
 	
@@ -27,8 +28,13 @@ public class SkeletonGroup extends Entity {
 	public void update(Camera camera) {
 		super.update(camera);
 		
-		if (!PhaseManager.isEnemyPhase())
+		if (!PhaseManager.isEnemyPhase()) {
 			wasEnemyPhase = false;
+			target = null;
+		}
+		
+		if (target != null && target.isRemoved())
+			target = null;
 		
 		if ((!wasEnemyPhase || target == null) && PhaseManager.isEnemyPhase()) {
 			wasEnemyPhase = true;
@@ -52,14 +58,16 @@ public class SkeletonGroup extends Entity {
 				}
 			}
 			
-			for (int i = 0; i < group.size(); i++) {
-				SkeletonPathFollower pathFollower = group.get(i).getComponent(SkeletonPathFollower.class);
-				
-				if (pathFollower == null) 
-					continue;
-				
-				pathFollower.setPath(shortestPath);
-			}
+			path = shortestPath;
+		}
+		
+		for (Entity e: group) {
+			SkeletonPathFollower pathFollower = e.getComponent(SkeletonPathFollower.class);
+			
+			if (pathFollower == null) 
+				continue;
+			
+			pathFollower.setPath(path);
 		}
 	}
 	

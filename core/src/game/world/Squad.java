@@ -3,6 +3,7 @@ package game.world;
 import game.entity.Archer;
 import game.entity.Entity;
 import game.entity.component.ClickAttack;
+import game.entity.component.ClickMove;
 import game.entity.component.Clickable;
 
 import java.util.ArrayList;
@@ -72,6 +73,10 @@ public class Squad {
 			ClickAttack clickAttack = squad.get(i).getComponent(ClickAttack.class);
 			if (clickAttack == null) continue;
 			clickAttack.reset();
+			
+			ClickMove clickMove = squad.get(i).getComponent(ClickMove.class);
+			if (clickMove == null) continue;
+			clickMove.resetMoveRadiusCenter();
 		}
 	}
 

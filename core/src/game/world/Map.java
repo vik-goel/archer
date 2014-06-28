@@ -13,13 +13,13 @@ public class Map {
 
 	private TiledMap tiledMap;
 	private OrthogonalTiledMapRenderer renderer;
-	private TiledMapTileLayer wallLayer;
+	private TiledMapTileLayer floorLayer;
 	
 	public Map(String tmxPath) {
 		tiledMap = new TmxMapLoader().load(tmxPath);
 		renderer = new OrthogonalTiledMapRenderer(tiledMap);
 		
-		wallLayer = (TiledMapTileLayer) tiledMap.getLayers().get("walls");
+		floorLayer = (TiledMapTileLayer) tiledMap.getLayers().get("floor");
 	}
 	
 	public void render(Camera camera) {
@@ -28,15 +28,15 @@ public class Map {
 	}
 	
 	public boolean isSolid(int x, int y) {
-		return wallLayer.getCell(x, y) != null;
+		return floorLayer.getCell(x, y) == null;
 	}
 	
 	public int getWidth() {
-		return wallLayer.getWidth();
+		return floorLayer.getWidth();
 	}
 	
 	public int getHeight()  {
-		return wallLayer.getHeight();
+		return floorLayer.getHeight();
 	}
 
 	public boolean outOfBounds(int x, int y) {

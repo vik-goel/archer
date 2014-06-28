@@ -23,11 +23,12 @@ public class Archer extends Entity {
 	}
 
 	public Rectangle getCollisionBounds() {
+		final float xIncrease = 5;
 		final float xReduce = 40;
 		final float heightReduce = 35;
 		final float yIncrease = 7;
 		
-		return new Rectangle(bounds.x + xReduce / 2, bounds.y - yIncrease, bounds.width - xReduce, bounds.height - heightReduce);
+		return new Rectangle(bounds.x + xReduce / 2 - xIncrease, bounds.y - yIncrease, bounds.width - xReduce, bounds.height - heightReduce);
 	}
-	
+
 }
