@@ -1,6 +1,7 @@
 package game.entity.component;
 
 import game.entity.Camera;
+import game.entity.movement.Collision;
 import game.world.PhaseManager;
 
 import com.badlogic.gdx.Gdx;
@@ -60,7 +61,7 @@ public class ClickMove extends Component {
 
 			Vector2 moveAmount = mousePos.sub(parentCenter);
 			float length = moveAmount.len();
-			moveAmount.nor().scl(Math.min(MOVE_SPEED, length)).scl(Movement.collision(parent, moveAmount));
+			moveAmount.nor().scl(Math.min(MOVE_SPEED, length)).scl(Collision.collision(parent, moveAmount));
 
 			Vector2 newCenterPos = parentCenter.add(moveAmount);
 

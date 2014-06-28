@@ -1,4 +1,4 @@
-package game.entity.component;
+package game.entity.movement;
 
 import game.entity.Entity;
 import game.world.Map;
@@ -6,7 +6,7 @@ import game.world.Map;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-public class Movement {
+public class Collision {
 
 	public static Vector2 collision(Entity parent, Vector2 amt) {
 		if (amt.x != 0 && amt.y != 0) 

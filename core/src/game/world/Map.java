@@ -38,5 +38,9 @@ public class Map {
 	public int getHeight()  {
 		return wallLayer.getHeight();
 	}
+
+	public boolean outOfBounds(int x, int y) {
+		return x < 0 || y < 0 || x >= getWidth() || y >= getHeight();
+	}
 	
 }

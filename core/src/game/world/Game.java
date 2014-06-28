@@ -1,7 +1,7 @@
 package game.world;
 
 import game.entity.Camera;
-import game.entity.Skeleton;
+import game.entity.Spawner;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -19,12 +19,12 @@ public class Game extends ApplicationAdapter {
 		map = new Map("test_map_2.tmx");
 		
 		manager = new EntityManager(map);
-		
 		manager.addEntity(camera = new Camera(new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight())));
-		manager.addEntity(new Skeleton(new Vector2(500, 160)));
 		
 		squad = new Squad(manager);
 		PhaseManager.setSquad(squad);
+		
+		manager.addEntity(new Spawner(new Vector2(770, 500), squad));
 	}
 
 	public void render() {

@@ -58,4 +58,8 @@ public class Squad {
 		}
 	}
 
+	public ArrayList<Entity> getEntities() {
+		return squad;
+	}
+
 }

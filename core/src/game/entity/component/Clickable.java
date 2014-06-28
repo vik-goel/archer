@@ -72,7 +72,7 @@ public class Clickable extends Component {
 		
 		SHAPE_RENDERER.begin(ShapeType.Line);
 		SHAPE_RENDERER.setColor(SELECTED_COLOR);
-		SHAPE_RENDERER.ellipse(parentCenter.x + xOffs, parentCenter.y + yOffs, circleWidth, circleHeight);
+		SHAPE_RENDERER.ellipse(parentCenter.x + xOffs - camera.getBounds().x, parentCenter.y + yOffs - camera.getBounds().y, circleWidth, circleHeight);
 		SHAPE_RENDERER.end();
 	}
 
