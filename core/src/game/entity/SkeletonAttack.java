@@ -12,7 +12,7 @@ public class SkeletonAttack extends Component {
 	
 	private float attackRadius;
 	private float damage;
-	private int attackDelay, attackDelayCounter = 0;
+	private float attackDelay, attackDelayCounter = 0;
 	
 	public SkeletonAttack(Squad squad, float attackRadius, float damage, int attackDelay) {
 		this.squad = squad;
@@ -21,10 +21,10 @@ public class SkeletonAttack extends Component {
 		this.attackDelay = attackDelay;
 	}
 
-	public void update(Camera camera) {
-		super.update(camera);
+	public void update(Camera camera, float dt) {
+		super.update(camera, dt);
 		
-		attackDelayCounter++;
+		attackDelayCounter += dt;
 		
 		if (canAttack())
 			attack();

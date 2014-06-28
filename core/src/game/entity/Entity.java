@@ -23,13 +23,13 @@ public abstract class Entity {
 		this.bounds = bounds;
 	}
 
-	public void update(Camera camera) {
+	public void update(Camera camera, float dt) {
 		for (int i = 0; i < components.size(); i++) {
 			
 			if (!components.get(i).isInitialized()) 
 				components.get(i).init(camera);
 			
-			components.get(i).update(camera);
+			components.get(i).update(camera, dt);
 		}
 	}
 

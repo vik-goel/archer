@@ -33,8 +33,8 @@ public class Clickable extends Component {
 		this.circleHeight = circleHeight;
 	}
 
-	public void update(Camera camera) {
-		super.update(camera);
+	public void update(Camera camera, float dt) {
+		super.update(camera, dt);
 
 		if (!PhaseManager.isPlayerPhase())
 			return;

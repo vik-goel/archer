@@ -13,8 +13,8 @@ public class Render extends Component {
 		this.sprite = sprite;
 	}
 
-	public void update(Camera camera) {
-		super.update(camera);
+	public void update(Camera camera, float dt) {
+		super.update(camera, dt);
 		sprite.setPosition(parent.getBounds().x, parent.getBounds().y);
 		sprite.setSize(parent.getBounds().width, parent.getBounds().height);
 	}

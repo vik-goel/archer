@@ -49,10 +49,10 @@ public class ClickAttack extends Component {
 		clickable = parent.getComponent(Clickable.class);
 	}
 
-	public void update(Camera camera) {
-		super.update(camera);
+	public void update(Camera camera, float dt) {
+		super.update(camera, dt);
 
-		attackDelayCounter++;
+		attackDelayCounter += dt;
 		
 		if (PhaseManager.isEnemyPhase())
 			attack();

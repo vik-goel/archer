@@ -26,7 +26,7 @@ public abstract class Component {
 		initialized = true;
 	}
 
-	public void update(Camera camera) {
+	public void update(Camera camera, float dt) {
 	}
 
 	public void renderLit(Camera camera, SpriteBatch batch) {

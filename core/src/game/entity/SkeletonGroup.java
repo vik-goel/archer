@@ -25,8 +25,8 @@ public class SkeletonGroup extends Entity {
 		group = new ArrayList<Entity>();
 	}
 
-	public void update(Camera camera) {
-		super.update(camera);
+	public void update(Camera camera, float dt) {
+		super.update(camera, dt);
 		
 		if (!PhaseManager.isEnemyPhase()) {
 			wasEnemyPhase = false;

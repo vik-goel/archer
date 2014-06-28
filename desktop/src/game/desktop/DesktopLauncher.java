@@ -16,6 +16,7 @@ public class DesktopLauncher {
 		config.samples = 4;
 		
 		config.backgroundFPS = -1;
+		config.foregroundFPS = 60;
 		config.vSyncEnabled = true;
 		config.useGL30 = false;
 		config.allowSoftwareMode = true;

@@ -43,24 +43,25 @@ public class Projectile extends Component {
 		}
 	}
 
-	public void update(Camera camera) {
-		super.update(camera);
+	public void update(Camera camera, float dt) {
+		super.update(camera, dt);
 		
-		move();
+		move(dt);
 		range();
 		collisions();
 	}
 
-	private void move() {
-		Vector2 collision = Collision.collision(parent, moveAmount);
+	private void move(float dt) {
+		Vector2 amt = new Vector2(moveAmount).scl(dt);
+		Vector2 collision = Collision.collision(parent, amt);
 		
 		if (collision.x != 1 || collision.y != 1) {
 			parent.remove();
 			return;
 		}
 		
-		parent.getBounds().x += moveAmount.x;
-		parent.getBounds().y += moveAmount.y;
+		parent.getBounds().x += amt.x;
+		parent.getBounds().y += amt.y;
 	}
 
 	private void range() {

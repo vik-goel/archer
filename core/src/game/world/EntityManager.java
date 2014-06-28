@@ -23,7 +23,7 @@ public class EntityManager {
 		batch = new SpriteBatch();
 	}
 
-	public void update(Camera camera) {
+	public void update(Camera camera, float dt) {
 		for (int i = 0; i < entities.size(); i++) {
 
 			if (entities.get(i).isRemoved()) {
@@ -31,7 +31,7 @@ public class EntityManager {
 				continue;
 			}
 
-			entities.get(i).update(camera);
+			entities.get(i).update(camera, dt);
 		}
 	}
 

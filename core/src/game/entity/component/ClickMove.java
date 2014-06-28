@@ -35,8 +35,8 @@ public class ClickMove extends Component {
 		resetMoveRadiusCenter();
 	}
 
-	public void update(Camera camera) {
-		super.update(camera);
+	public void update(Camera camera, float dt) {
+		super.update(camera, dt);
 
 		if (!PhaseManager.isPlayerPhase())
 			return;

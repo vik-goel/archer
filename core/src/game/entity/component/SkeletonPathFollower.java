@@ -25,7 +25,7 @@ public class SkeletonPathFollower extends Component {
 		pathIndex = 0;
 	}
 
-	public void update(Camera camera) {
+	public void update(Camera camera, float dt) {
 		if (path == null || !PhaseManager.isEnemyPhase())
 			return;
 
@@ -38,7 +38,7 @@ public class SkeletonPathFollower extends Component {
 
 		Vector2 movement = new Vector2(destination).sub(currentPos);
 		float length = movement.len();
-		movement.nor().scl(Math.min(moveSpeed, length));
+		movement.nor().scl(Math.min(moveSpeed * dt, length));
 
 		if (length < moveSpeed)
 			pathIndex++;

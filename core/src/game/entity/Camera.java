@@ -25,23 +25,25 @@ public class Camera extends Entity {
 		orthoCamera = new OrthographicCamera(bounds.width, bounds.height);
 	}
 
-	public void update(Camera camera) {
-		super.update(camera);
+	public void update(Camera camera, float dt) {
+		super.update(camera, dt);
 
-		moveCameraBasedOnInput();
+		moveCameraBasedOnInput(dt);
 		positionCameraInsideMap();
 		updateCameraPosition();
 	}
 
-	private void moveCameraBasedOnInput() {
+	private void moveCameraBasedOnInput(float dt) {
+		float speed = cameraSpeed * dt;
+		
 		if (Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W))
-			bounds.y += cameraSpeed;
+			bounds.y += speed;
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A))
-			bounds.x -= cameraSpeed;
+			bounds.x -= speed;
 		if (Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S))
-			bounds.y -= cameraSpeed;
+			bounds.y -= speed;
 		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D))
-			bounds.x += cameraSpeed;
+			bounds.x += speed;
 	}
 
 	private void positionCameraInsideMap() {

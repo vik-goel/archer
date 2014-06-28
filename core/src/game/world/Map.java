@@ -28,13 +28,14 @@ public class Map {
 		int width = getWidth();
 		int height = getHeight();
 
+		PolygonShape wallShape = new PolygonShape();
+		wallShape.setAsBox(TILE_SIZE / 2, TILE_SIZE / 2);
+		
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
 				if (!isSolid(x, y))
 					continue;
 
-				BodyDef wallDef = new BodyDef();
-				
 				float xOffs = 0, yOffs = 0;
 				
 				if (floorLayer.getCell(x + 1, y) == null)
@@ -43,13 +44,10 @@ public class Map {
 				if (floorLayer.getCell(x, y + 1) == null)
 					yOffs = TILE_SIZE;
 				
+				BodyDef wallDef = new BodyDef();
 				wallDef.position.set(x * TILE_SIZE + xOffs, y * TILE_SIZE + yOffs);
 
 				Body wallBody = world.createBody(wallDef);
-
-				PolygonShape wallShape = new PolygonShape();
-				wallShape.setAsBox(TILE_SIZE / 2, TILE_SIZE / 2 );
-
 				wallBody.createFixture(wallShape, 0);
 			}
 		}

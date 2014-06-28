@@ -30,7 +30,7 @@ public class MobSpawner extends Component {
 	private boolean pastEnemyPhase = false;
 	private int numEntities = 0;
 	private SkeletonGroup group;
-	private int spawnDelayCounter = 0;
+	private float spawnDelayCounter = 0;
 	private int spawnDelay = 0;
 
 	public MobSpawner(Squad squad) {
@@ -38,10 +38,10 @@ public class MobSpawner extends Component {
 		SpawnerManager.addSpawner(this);
 	}
 
-	public void update(Camera camera) {
-		super.update(camera);
+	public void update(Camera camera, float dt) {
+		super.update(camera, dt);
 
-		spawnDelayCounter++;
+		spawnDelayCounter += dt;
 		
 		if (!PhaseManager.isEnemyPhase()) {
 			pastEnemyPhase = false;
