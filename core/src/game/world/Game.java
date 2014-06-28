@@ -24,6 +24,7 @@ public class Game extends ApplicationAdapter {
 		manager.addEntity(new Skeleton(new Vector2(500, 160)));
 		
 		squad = new Squad(manager);
+		PhaseManager.setSquad(squad);
 	}
 
 	public void render() {
@@ -38,6 +39,7 @@ public class Game extends ApplicationAdapter {
 	private void updateWorld() {
 		manager.update(camera);
 		squad.update();
+		PhaseManager.update();
 	}
 	
 	private void renderWorld() {

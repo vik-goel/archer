@@ -50,4 +50,12 @@ public class Squad {
 		PhaseManager.changePhase();
 	}
 
+	public void reset() {
+		for (int i = 0; i < squad.size(); i++) {
+			ClickAttack clickAttack = squad.get(i).getComponent(ClickAttack.class);
+			if (clickAttack == null) continue;
+			clickAttack.reset();
+		}
+	}
+
 }

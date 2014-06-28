@@ -108,4 +108,8 @@ public class ClickAttack extends Component {
 	public boolean hasSetAttack() {
 		return setAttack;
 	}
+	
+	public void reset() {
+		setAttack = attacking = selectingAngle = false;
+	}
 }
