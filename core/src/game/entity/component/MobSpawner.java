@@ -85,8 +85,8 @@ public class MobSpawner extends Component {
 		spawnDelay = random.nextInt(10);
 	}
 
-	public void render(Camera camera, SpriteBatch batch) {
-		super.render(camera, batch);
+	public void renderLit(Camera camera, SpriteBatch batch) {
+		super.renderLit(camera, batch);
 		
 		if (numEntities <= 0)
 			return;

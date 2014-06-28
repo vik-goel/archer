@@ -24,8 +24,8 @@ public class Health extends Component {
 		this.barWidth = barWidth;
 	}
 	
-	public void render(Camera camera, SpriteBatch batch) {
-		super.render(camera, batch);
+	public void renderUnlit(Camera camera, SpriteBatch batch) {
+		super.renderUnlit(camera, batch);
 		
 		float x = parent.getBounds().x + (parent.getBounds().width - barWidth) / 2 - camera.getBounds().x;
 		float y = parent.getBounds().y + parent.getBounds().height - camera.getBounds().y;

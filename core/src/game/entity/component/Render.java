@@ -19,8 +19,8 @@ public class Render extends Component {
 		sprite.setSize(parent.getBounds().width, parent.getBounds().height);
 	}
 
-	public void render(Camera camera, SpriteBatch batch) {
-		super.render(camera, batch);
+	public void renderLit(Camera camera, SpriteBatch batch) {
+		super.renderLit(camera, batch);
 		
 		batch.begin();
 		sprite.draw(batch);

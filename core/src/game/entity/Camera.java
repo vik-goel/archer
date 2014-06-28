@@ -7,6 +7,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapRenderer;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -88,5 +89,9 @@ public class Camera extends Entity {
 		Vector3 worldPos3 = new Vector3(worldPos.x, worldPos.y, 0);
 		Vector3 screenPos3 = orthoCamera.project(worldPos3);
 		return new Vector2(screenPos3.x, screenPos3.y);
+	}
+
+	public Matrix4 getCombinedMatrix() {
+		return orthoCamera.combined;
 	}
 }

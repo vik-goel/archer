@@ -29,7 +29,10 @@ public abstract class Component {
 	public void update(Camera camera) {
 	}
 
-	public void render(Camera camera, SpriteBatch batch) {
+	public void renderLit(Camera camera, SpriteBatch batch) {
+	}
+	
+	public void renderUnlit(Camera camera, SpriteBatch batch) {
 	}
 
 }

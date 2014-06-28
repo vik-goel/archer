@@ -8,17 +8,19 @@ import game.entity.component.Clickable;
 
 import java.util.ArrayList;
 
+import box2dLight.RayHandler;
+
 import com.badlogic.gdx.math.Vector2;
 
 public class Squad {
 
 	private ArrayList<Entity> squad;
 
-	public Squad(EntityManager manager) {
+	public Squad(EntityManager manager, RayHandler handler) {
 		squad = new ArrayList<Entity>();
 
-		squad.add(new Archer(new Vector2(100, 100)));
-		squad.add(new Archer(new Vector2(130, 80)));
+		squad.add(new Archer(new Vector2(100, 100), handler));
+		squad.add(new Archer(new Vector2(130, 80), handler));
 
 		for (int i = 0; i < squad.size(); i++)
 			manager.addEntity(squad.get(i));

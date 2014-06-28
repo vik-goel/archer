@@ -143,8 +143,8 @@ public class ClickAttack extends Component {
 		}
 	}
 
-	public void render(Camera camera, SpriteBatch batch) {
-		super.render(camera, batch);
+	public void renderUnlit(Camera camera, SpriteBatch batch) {
+		super.renderUnlit(camera, batch);
 
 		if (!attacking)
 			return;
