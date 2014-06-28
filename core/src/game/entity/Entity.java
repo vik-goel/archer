@@ -55,6 +55,10 @@ public abstract class Entity {
 	public Rectangle getBounds() {
 		return bounds;
 	}
+	
+	public Rectangle getCollisionBounds() {
+		return bounds;
+	}
 
 	@SuppressWarnings("unchecked")
 	public <T> T getComponent(Class<T> component) {

@@ -17,7 +17,7 @@ public class Map {
 	
 	public Map(String tmxPath) {
 		tiledMap = new TmxMapLoader().load(tmxPath);
-		renderer = new OrthogonalTiledMapRenderer(tiledMap, 2);
+		renderer = new OrthogonalTiledMapRenderer(tiledMap);
 		
 		wallLayer = (TiledMapTileLayer) tiledMap.getLayers().get("walls");
 	}

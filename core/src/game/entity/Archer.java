@@ -14,10 +14,18 @@ public class Archer extends Entity {
 	public Archer(Vector2 pos) {
 		super(new Rectangle(pos.x, pos.y, 64, 64));
 		
-		addComponent(new ClickMove(300));
+		addComponent(new ClickMove(400));
 		addComponent(new Clickable(-17, -40, 32, 16));
 		addComponent(new SquadSprite("archer.png"));
 		addComponent(new ClickAttack(200, 120, new Color(1f, 0f, 1f, 0.25f)));
+	}
+
+	public Rectangle getCollisionBounds() {
+		final float xReduce = 40;
+		final float heightReduce = 35;
+		final float yIncrease = 7;
+		
+		return new Rectangle(bounds.x + xReduce / 2, bounds.y - yIncrease, bounds.width - xReduce, bounds.height - heightReduce);
 	}
 	
 }

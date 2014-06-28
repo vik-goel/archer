@@ -16,12 +16,12 @@ public class Game extends ApplicationAdapter {
 	private Squad squad;
 	
 	public void create () {
-		map = new Map("test_map.tmx");
+		map = new Map("test_map_2.tmx");
 		
 		manager = new EntityManager(map);
 		
 		manager.addEntity(camera = new Camera(new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight())));
-		manager.addEntity(new Skeleton(new Vector2(500, 125)));
+		manager.addEntity(new Skeleton(new Vector2(500, 160)));
 		
 		squad = new Squad(manager);
 	}

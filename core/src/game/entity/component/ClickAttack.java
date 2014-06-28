@@ -50,10 +50,10 @@ public class ClickAttack extends Component {
 		}
 		
 		if (!clickable.isSelected()) {
-			if (selectingAngle)
-				clickable.select();
-			else 
-				return;
+			if (!setAttack)
+				selectingAngle = attacking = false;
+			
+			return;
 		}
 
 		if (Gdx.input.isButtonPressed(1) && Gdx.input.justTouched()) {
