@@ -1,7 +1,13 @@
 package game.entity.component;
 
 import game.entity.Camera;
+import game.entity.Entity;
+import game.entity.AttackFactory;
+import game.entity.AttackType;
+import game.entity.Skeleton;
 import game.world.PhaseManager;
+
+import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -24,12 +30,17 @@ public class ClickAttack extends Component {
 	private float attackAngle = 0;
 	private float fov;
 
+	private AttackType type;
+	private float attackDelay, attackDelayCounter = 0;
+	
 	private Clickable clickable;
 
-	public ClickAttack(float radius, float fov, Color attackColor) {
+	public ClickAttack(float radius, float fov, Color attackColor, AttackType type, float attackDelay) {
 		this.radius = radius;
 		this.attackColor = attackColor;
 		this.fov = fov;
+		this.type = type;
+		this.attackDelay = attackDelay;
 	}
 
 	public void init(Camera camera) {
@@ -41,9 +52,65 @@ public class ClickAttack extends Component {
 	public void update(Camera camera) {
 		super.update(camera);
 
-		if (!PhaseManager.isPlayerPhase())
+		attackDelayCounter++;
+		
+		if (PhaseManager.isEnemyPhase())
+			attack();
+		
+		if (PhaseManager.isPlayerPhase())
+			setAttack(camera);
+	}
+	
+	private void attack() {
+		if (!canAttack())
 			return;
 		
+		Entity target = getTarget();
+		
+		if (target != null) {
+			Vector2 pos = new Vector2(parent.getBounds().x + parent.getBounds().width / 2, parent.getBounds().y + parent.getBounds().height / 2);
+			Vector2 targetPos = new Vector2(target.getBounds().x, target.getBounds().y);
+			
+			Entity attackEntity = AttackFactory.getProjectile(type, pos, targetPos, radius);
+			
+			if (attackEntity != null) {
+				parent.getManager().addEntity(attackEntity);
+				attackDelayCounter = 0;
+			}
+		}
+	}
+
+	private boolean canAttack() {
+		return attackDelayCounter >= attackDelay;
+	}
+
+	private Entity getTarget() {
+		Vector2 parentCenter = new Vector2();
+		parent.getBounds().getCenter(parentCenter);
+		
+		ArrayList<Entity> inRange = getParent().getManager().getEntitiesWithinArc(parentCenter, radius, attackAngle, fov);
+		
+		Entity target = null;
+		double distanceToTarget = Double.MAX_VALUE;
+		
+		Vector2 parentPos = new Vector2(parent.getBounds().x, parent.getBounds().y);
+		
+		for (int i = 0; i < inRange.size(); i++) {
+			if (!(inRange.get(i) instanceof Skeleton))
+				continue;
+			
+			double distance = new Vector2(inRange.get(i).getBounds().x, inRange.get(i).getBounds().y).dst2(parentPos);
+			
+			if (distance < distanceToTarget) {
+				distanceToTarget = distance;
+				target = inRange.get(i);
+			}
+		}
+		
+		return target;
+	}
+
+	public void setAttack(Camera camera) {
 		if (clickable.isClicked()) {
 			attacking = false;
 			setAttack = false;

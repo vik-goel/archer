@@ -30,6 +30,10 @@ public class Render extends Component {
 	public void setSprite(Sprite sprite) {
 		this.sprite = sprite;
 	}
+
+	public void setRotation(float degrees) {
+		sprite.setRotation(degrees);
+	}
 	
 	
 }

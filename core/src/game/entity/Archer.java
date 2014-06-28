@@ -17,7 +17,7 @@ public class Archer extends Entity {
 		addComponent(new ClickMove(400));
 		addComponent(new Clickable(-17, -40, 32, 16));
 		addComponent(new SquadSprite("archer.png"));
-		addComponent(new ClickAttack(200, 120, new Color(1f, 0f, 1f, 0.25f)));
+		addComponent(new ClickAttack(200, 120, new Color(1f, 0f, 1f, 0.25f), AttackType.ARROW, 10));
 	}
 
 	public Rectangle getCollisionBounds() {

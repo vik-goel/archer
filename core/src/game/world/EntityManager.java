@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 
 public class EntityManager {
 
@@ -53,6 +54,26 @@ public class EntityManager {
 		for (int i = 0; i < entities.size(); i++)
 			if (entities.get(i).getBounds().overlaps(area))
 				result.add(entities.get(i));
+		
+		return result;
+	}
+
+	public ArrayList<Entity> getEntitiesWithinArc(Vector2 pos, float radius, float angle, float angleSpread) {
+		ArrayList<Entity> result = new ArrayList<Entity>();
+		
+		for (int i = 0; i < entities.size(); i++) {
+			Vector2 ePos = new Vector2(entities.get(i).getBounds().x, entities.get(i).getBounds().y);
+			
+			if (ePos.dst(pos) > radius)
+				continue;
+
+			Vector2 direction = ePos.sub(pos);
+			
+			double angleToEntity = Math.toDegrees(Math.atan2(direction.y, direction.x));
+			
+			if (angleToEntity >= angle - angleSpread && angleToEntity <= angle + angleSpread)
+				result.add(entities.get(i));
+		}
 		
 		return result;
 	}
