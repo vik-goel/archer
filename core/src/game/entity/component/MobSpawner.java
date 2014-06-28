@@ -39,11 +39,11 @@ public class MobSpawner extends Component {
 		SkeletonGroup group = new SkeletonGroup(new Vector2(parent.getBounds().x, parent.getBounds().y), squad);
 		parent.getManager().addEntity(group);
 		
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 2; i++) {
 			float x = parent.getBounds().x + random.nextFloat() * SPAWN_VARIANCE - SPAWN_VARIANCE / 2;
 			float y = parent.getBounds().y + random.nextFloat() * SPAWN_VARIANCE - SPAWN_VARIANCE / 2;
 			
-			Skeleton skeleton = new Skeleton(new Vector2(x, y));
+			Skeleton skeleton = new Skeleton(new Vector2(x, y), squad);
 			
 			group.addSkeleton(skeleton);
 			parent.getManager().addEntity(skeleton);

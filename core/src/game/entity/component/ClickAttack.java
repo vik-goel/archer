@@ -123,7 +123,7 @@ public class ClickAttack extends Component {
 			return;
 		}
 
-		if (Gdx.input.isButtonPressed(1) && Gdx.input.justTouched()) {
+		if (!Gdx.input.isButtonPressed(0) && Gdx.input.isButtonPressed(1) && Gdx.input.justTouched()) {
 			if (attacking && selectingAngle) {
 				selectingAngle = false;
 				setAttack = true;

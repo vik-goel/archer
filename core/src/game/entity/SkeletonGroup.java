@@ -33,6 +33,14 @@ public class SkeletonGroup extends Entity {
 		if ((!wasEnemyPhase || target == null) && PhaseManager.isEnemyPhase()) {
 			wasEnemyPhase = true;
 			
+			if (!group.isEmpty()) {
+				bounds.x = group.get(0).getBounds().x;
+				bounds.y = group.get(0).getBounds().y;
+			} else {
+				remove();
+				return;
+			}
+			
 			ArrayList<Vector2> shortestPath = null;
 			
 			for (int i = 0; i < squad.getEntities().size(); i++) {

@@ -3,6 +3,7 @@ package game.entity;
 import game.entity.component.ClickAttack;
 import game.entity.component.ClickMove;
 import game.entity.component.Clickable;
+import game.entity.component.Health;
 import game.entity.component.SquadSprite;
 
 import com.badlogic.gdx.graphics.Color;
@@ -17,7 +18,8 @@ public class Archer extends Entity {
 		addComponent(new ClickMove(400));
 		addComponent(new Clickable(-17, -40, 32, 16));
 		addComponent(new SquadSprite("archer.png"));
-		addComponent(new ClickAttack(200, 120, new Color(1f, 0f, 1f, 0.25f), AttackType.ARROW, 10));
+		addComponent(new ClickAttack(200, 100, new Color(1f, 0f, 1f, 0.25f), AttackType.ARROW, 10));
+		addComponent(new Health(100, 40));
 	}
 
 	public Rectangle getCollisionBounds() {

@@ -15,7 +15,6 @@ public class ClickMove extends Component {
 
 	private static final ShapeRenderer SHAPE_RENDERER = new ShapeRenderer();
 	private static final Color RADIUS_COLOR = new Color(0f, 0f, 1f, 1f);
-	private static final float MOVE_SPEED = 10;
 
 	private Clickable clickable;
 	private boolean movingEnabled = false;
@@ -61,12 +60,16 @@ public class ClickMove extends Component {
 
 			Vector2 moveAmount = mousePos.sub(parentCenter);
 			float length = moveAmount.len();
-			moveAmount.nor().scl(Math.min(MOVE_SPEED, length)).scl(Collision.collision(parent, moveAmount));
+			moveAmount.nor();
+			
+			for (int i = 0; i < length; i++) {
+				moveAmount = moveAmount.scl(Collision.collision(parent, moveAmount));
+				
+				Vector2 newCenterPos = parentCenter.add(moveAmount);
 
-			Vector2 newCenterPos = parentCenter.add(moveAmount);
-
-			if (newCenterPos.dst(moveRadiusCenter) <= moveRadius) 
-				parent.getBounds().setPosition(parent.getBounds().x + moveAmount.x, parent.getBounds().y + moveAmount.y);
+				if (newCenterPos.dst(moveRadiusCenter) <= moveRadius) 
+					parent.getBounds().setPosition(parent.getBounds().x + moveAmount.x, parent.getBounds().y + moveAmount.y);
+			}
 		}
 	}
 

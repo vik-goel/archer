@@ -24,9 +24,24 @@ public class Squad {
 	}
 
 	public void update() {
+		destroyReferencesToRemovedEntities();
+		
 		if (!PhaseManager.isPlayerPhase())
 			return;
 
+		ensureOnlyOneEntityIsSelected();
+
+		if (shouldChangePhase())
+			PhaseManager.changePhase();
+	}
+
+	private void destroyReferencesToRemovedEntities() {
+		for (int i = 0; i < squad.size(); i++) 
+			if (squad.get(i).isRemoved())
+				squad.remove(i--);
+	}
+
+	private void ensureOnlyOneEntityIsSelected() {
 		boolean alreadySelected = false;
 
 		for (int i = 0; i < squad.size(); i++) {
@@ -38,18 +53,20 @@ public class Squad {
 					alreadySelected = true;
 			}
 		}
-
+	}
+	
+	private boolean shouldChangePhase() {
 		for (int i = 0; i < squad.size(); i++) {
 			ClickAttack clickAttack = squad.get(i).getComponent(ClickAttack.class);
 			if (clickAttack == null)
 				continue;
 			if (!clickAttack.hasSetAttack())
-				return;
+				return false;
 		}
-
-		PhaseManager.changePhase();
+		
+		return true;
 	}
-
+	
 	public void reset() {
 		for (int i = 0; i < squad.size(); i++) {
 			ClickAttack clickAttack = squad.get(i).getComponent(ClickAttack.class);

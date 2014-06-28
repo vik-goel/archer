@@ -10,12 +10,10 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Arrow extends Entity {
 
-	private static final float SPEED = 6;
-	
 	public Arrow(Vector2 pos, Vector2 target, float range) {
 		super(new Rectangle(pos.x, pos.y, 32, 12));
 		addComponent(new Render(new Sprite(new Texture("arrow.png"))));
-		addComponent(new Projectile(target, SPEED, range));
+		addComponent(new Projectile(target, true, 6, range, 25));
 	}
 
 }
