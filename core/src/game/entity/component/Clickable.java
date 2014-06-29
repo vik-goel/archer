@@ -64,8 +64,8 @@ public class Clickable extends Component {
 		}
 	}
 	
-	public void renderUnlit(Camera camera, SpriteBatch batch) {
-		super.renderUnlit(camera, batch);
+	public void renderLit(Camera camera, SpriteBatch batch) {
+		super.renderLit(camera, batch);
 		
 		if (!drawSelectedCircle || !selected)
 			return;

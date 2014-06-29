@@ -67,7 +67,7 @@ public class SkeletonGroup extends Entity {
 			if (pathFollower == null) 
 				continue;
 			
-			pathFollower.setPath(path);
+			pathFollower.setPath(path, target);
 		}
 	}
 	

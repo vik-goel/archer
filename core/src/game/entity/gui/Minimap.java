@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
@@ -27,6 +28,8 @@ public class Minimap extends Entity {
 	private static final float HEIGHT = 0.9f;
 	private static final float SPACING = 25;
 
+	private static final float ALPHA_ACCELERATION = 0.0125f;
+	
 	private static Minimap minimap;
 	private static ShapeRenderer renderer = new ShapeRenderer();
 	private static ArrayList<Render> renders = new ArrayList<Render>();
@@ -39,11 +42,14 @@ public class Minimap extends Entity {
 
 	private boolean[][] discovered;
 
+	private float alpha = 0f;
+	private float alphaSpeed = 0f;
+
 	public Minimap(Camera camera, int mapWidth, int mapHeight) {
 		super(new Rectangle());
 
 		minimap = this;
-		
+
 		discovered = new boolean[mapWidth][mapHeight];
 
 		for (int i = 0; i < discovered.length; i++)
@@ -77,8 +83,8 @@ public class Minimap extends Entity {
 		renderer.rect(0, 0, bounds.width, bounds.height);
 		renderer.end();
 
-		Gdx.gl20.glLineWidth(2);
-
+		Gdx.gl20.glLineWidth(SPACING);
+		
 		renderer.begin(ShapeType.Line);
 		renderer.setColor(1f, 1f, 0f, 1f);
 		renderer.rect(0, 0, bounds.width, bounds.height);
@@ -90,6 +96,12 @@ public class Minimap extends Entity {
 	public void update(Camera camera, float dt) {
 		super.update(camera, dt);
 
+		activate();
+		fadeAlpha();
+		destroyRemovedReferences();
+	}
+
+	private void activate() {
 		if (Gdx.input.isKeyPressed(Input.Keys.M) && !mDown) {
 			active = !active;
 			mDown = true;
@@ -98,7 +110,33 @@ public class Minimap extends Entity {
 			mDown = false;
 			Clickable.setEnabled(true);
 		}
+
+		if (active)
+			Camera.setMovementEnabled(false);
+		else
+			Camera.setMovementEnabled(true);
+	}
+
+	private void fadeAlpha() {
+		if (active) {
+			if (alphaSpeed < 0)
+				alphaSpeed = 0;
+			alphaSpeed += ALPHA_ACCELERATION;
+		} else {
+			if (alphaSpeed > 0)
+				alphaSpeed = 0;
+			alphaSpeed -= ALPHA_ACCELERATION;
+		}
 		
+		alpha += alphaSpeed ;
+		
+		if (alpha > 1)
+			alpha = 1;
+		else if (alpha < 0)
+			alpha = 0;
+	}
+
+	private void destroyRemovedReferences() {
 		for (int i = 0; i < renders.size(); i++)
 			if (renders.get(i).getParent().isRemoved())
 				renders.remove(i--);
@@ -107,17 +145,19 @@ public class Minimap extends Entity {
 	public void renderLate(Camera camera, SpriteBatch batch) {
 		super.renderLate(camera, batch);
 
-		if (!active)
+		if (alpha <= 0)
 			return;
 
 		renderBackground(camera);
-		
+
+		batch.setColor(1, 1, 1, alpha);
 		batch.begin();
 		
 		renderTiles(camera, batch);
 		renderObjects(camera, batch);
-		
+
 		batch.end();
+		batch.setColor(Color.WHITE);
 	}
 
 	private void renderBackground(Camera camera) {
@@ -125,7 +165,7 @@ public class Minimap extends Entity {
 		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
 		renderer.begin(ShapeType.Filled);
-		renderer.setColor(0f, 0f, 0f, 0.8f);
+		renderer.setColor(0f, 0f, 0f, 0.8f * alpha);
 		renderer.rect(0, 0, camera.getBounds().width, camera.getBounds().height);
 		renderer.end();
 
@@ -136,23 +176,22 @@ public class Minimap extends Entity {
 		Texture texture = frameBuffer.getColorBufferTexture();
 		batch.draw(texture, bounds.x + camera.getBounds().x, bounds.y + camera.getBounds().y);
 	}
-	
-	private void renderObjects(Camera camera, SpriteBatch batch) { 
-		float xScale =  tileWidth / Map.TILE_SIZE;
-		float yScale =  tileHeight / Map.TILE_SIZE;
-		
-		for (Render render: renders) {
+
+	private void renderObjects(Camera camera, SpriteBatch batch) {
+		float xScale = tileWidth / Map.TILE_SIZE;
+		float yScale = tileHeight / Map.TILE_SIZE;
+
+		for (Render render : renders) {
 			Sprite sprite = render.getSprite();
-			
+
 			Texture texture = sprite.getTexture();
-			
-			float xPos   = render.getParent().getBounds().x      * xScale + SPACING / 2f + bounds.x;
-			float yPos   = render.getParent().getBounds().y       * yScale + SPACING / 2f + bounds.y;
-			float width  = render.getParent().getBounds().width  * xScale;
+
+			float xPos = render.getParent().getBounds().x * xScale + SPACING / 2f + bounds.x;
+			float yPos = render.getParent().getBounds().y * yScale + SPACING / 2f + bounds.y;
+			float width = render.getParent().getBounds().width * xScale;
 			float height = render.getParent().getBounds().height * yScale;
-			
-			batch.draw(texture, xPos + camera.getBounds().x, yPos + camera.getBounds().y, width, height,
-					   sprite.getU(), sprite.getV2(), sprite.getU2(), sprite.getV());
+
+			batch.draw(texture, xPos + camera.getBounds().x, yPos + camera.getBounds().y, width, height, sprite.getU(), sprite.getV2(), sprite.getU2(), sprite.getV());
 		}
 	}
 

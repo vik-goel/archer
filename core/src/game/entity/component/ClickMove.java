@@ -16,7 +16,7 @@ public class ClickMove extends Component {
 	private static final ShapeRenderer SHAPE_RENDERER = new ShapeRenderer();
 	private static final Color RADIUS_COLOR = new Color(0f, 0f, 1f, 1f);
 	
-	private static final int MOVE_SPEED = 9;
+	public static final int MOVE_SPEED = 6;
 
 	private Clickable clickable;
 	private boolean movingEnabled = false;
@@ -48,9 +48,9 @@ public class ClickMove extends Component {
 			canMove = true;
 		}
 
-		if (!Gdx.input.isButtonPressed(0))
+		if (!Gdx.input.isButtonPressed(0) || !clickable.isSelected())
 			movingEnabled = false;
-
+		
 		if (Gdx.input.isButtonPressed(1) && Gdx.input.justTouched())
 			canMove = !canMove;
 
@@ -70,8 +70,10 @@ public class ClickMove extends Component {
 				
 				Vector2 newCenterPos = parentCenter.add(amt);
 
-				if (newCenterPos.dst(moveRadiusCenter) <= moveRadius)
+				if (newCenterPos.dst(moveRadiusCenter) <= moveRadius) {
 					parent.getBounds().setPosition(parent.getBounds().x + amt.x, parent.getBounds().y + amt.y);
+					camera.centerAround(newCenterPos);
+				}
 			}
 		}
 	}

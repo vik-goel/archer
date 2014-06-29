@@ -1,6 +1,7 @@
 package game.entity.movement;
 
 import game.entity.Entity;
+import game.entity.component.ClickAttack;
 import game.world.Map;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ public class Pathfinder {
 
 	public static ArrayList<Vector2> aStarSearch(Entity start, Entity goal) {
 		Map map = start.getMap();
-		
+
 		int startX = (int) Math.floor(start.getBounds().x / Map.TILE_SIZE);
 		int startY = (int) Math.floor(start.getBounds().y / Map.TILE_SIZE);
 		int goalX = (int) Math.floor(goal.getBounds().x / Map.TILE_SIZE);
@@ -23,12 +24,29 @@ public class Pathfinder {
 			startX = (int) Math.ceil(start.getBounds().x / Map.TILE_SIZE);
 			startY = (int) Math.ceil(start.getBounds().y / Map.TILE_SIZE);
 		}
-		
+
 		if (map.isSolid(goalX, goalY)) {
 			goalX = (int) Math.ceil(goal.getBounds().x / Map.TILE_SIZE);
 			goalY = (int) Math.ceil(goal.getBounds().y / Map.TILE_SIZE);
 		}
-		
+
+		ClickAttack attack = goal.getComponent(ClickAttack.class);
+
+		if (attack != null) {
+			if (attack.hasSetAttack()) {
+				float angle = attack.getAttackAngle();
+
+				if (angle <= 135 && angle > 45)
+					goalY++;
+				else if (angle <= 45 && angle > -45)
+					goalX++;
+				else if (angle <= -45 && angle > -135)
+					goalY--;
+				else
+					goalX--;
+			}
+		}
+
 		return aStarSearch(map, startX, startY, goalX, goalY);
 	}
 

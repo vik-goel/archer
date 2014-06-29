@@ -21,7 +21,7 @@ public class Skeleton extends Entity {
 		addComponent(new Render(new Sprite(texture, 0, 128, 64, 64)));
 		addComponent(new SkeletonPathFollower(3));
 		addComponent(new SkeletonAttack(squad, 50, 5, 20));
-		addComponent(new Health(100, 40));
+		addComponent(new Health(40, 30, -8));
 	}
 
 }

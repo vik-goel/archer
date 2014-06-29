@@ -43,11 +43,11 @@ public class SquadSprite extends Component {
 		if (clickAttack.isAttacking()) {
 			float angle = clickAttack.getAttackAngle();
 			
-			if (angle <= 145 && angle > 45)
+			if (angle <= 135 && angle > 45)
 				render.setSprite(sprites[0]);
 			else if (angle <= 45 && angle > -45)
 				render.setSprite(sprites[3]);
-			else if (angle <= -45 && angle > -145)
+			else if (angle <= -45 && angle > -135)
 				render.setSprite(sprites[2]);
 			else 
 				render.setSprite(sprites[1]);

@@ -88,7 +88,7 @@ public class ClickAttack extends Component {
 		Vector2 parentCenter = new Vector2();
 		parent.getBounds().getCenter(parentCenter);
 		
-		ArrayList<Entity> inRange = getParent().getManager().getEntitiesWithinArc(parentCenter, radius, attackAngle, fov);
+		ArrayList<Entity> inRange = getParent().getManager().getEntitiesWithinArc(parentCenter, radius, attackAngle, fov / 2);
 		
 		Entity target = null;
 		double distanceToTarget = Double.MAX_VALUE;
@@ -134,7 +134,7 @@ public class ClickAttack extends Component {
 			}
 		}
 		
-		if (selectingAngle) {
+		if (selectingAngle) { 
 			Vector2 parentCenter = new Vector2();
 			parent.getBounds().getCenter(parentCenter);
 			

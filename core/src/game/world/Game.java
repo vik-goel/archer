@@ -8,6 +8,7 @@ import box2dLight.RayHandler;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
@@ -42,6 +43,10 @@ public class Game extends ApplicationAdapter {
 		manager.addEntity(new Spawner(new Vector2(770, 500), squad));
 
 		fpsLogger = new FPSLogger();
+		
+		Music music = Gdx.audio.newMusic(Gdx.files.internal("adagio.ogg"));
+		music.setLooping(true);
+		music.play();
 	}
 
 	public void render() {

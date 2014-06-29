@@ -10,6 +10,7 @@ import game.entity.movement.Collision;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 
 
@@ -24,11 +25,13 @@ public class Projectile extends Component {
 	private Vector2 oldPos;
 	private Vector2 target;
 	
+	private Sound collisionSound;
 	private boolean friendlyProjectile;
 	private float range, speed, damage;
 	private int knockback;
 	
-	public Projectile(Vector2 target, boolean friendlyProjectile, float speed, float range, float damage, int knockback) {
+	public Projectile(Sound collisionSound, Vector2 target, boolean friendlyProjectile, float speed, float range, float damage, int knockback) {
+		this.collisionSound = collisionSound;
 		this.target = target;
 		this.friendlyProjectile = friendlyProjectile;
 		this.speed = speed;
@@ -130,6 +133,8 @@ public class Projectile extends Component {
 		
 		for (int i = 0; i < numParticles; i++)
 			parent.getManager().addEntity(new BloodParticle(pos, moveAmount));
+		
+		collisionSound.play();
 	}
 
 }
