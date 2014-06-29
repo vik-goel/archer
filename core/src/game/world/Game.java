@@ -35,6 +35,7 @@ public class Game extends ApplicationAdapter {
 		PhaseManager.setSquad(squad);
 
 		manager.addEntity(new Spawner(new Vector2(770, 500), squad));
+
 		fpsLogger = new FPSLogger();
 	}
 

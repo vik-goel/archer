@@ -1,30 +1,40 @@
 package game.entity.component;
 
+import game.entity.Blood;
+import game.entity.BloodParticle;
 import game.entity.Camera;
 import game.entity.Entity;
 import game.entity.Skeleton;
 import game.entity.movement.Collision;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import com.badlogic.gdx.math.Vector2;
 
 
 public class Projectile extends Component {
 
+	private static final Random random = new Random();
+	private static final double BLOOD_CHANCE = 0.7;
+	private static final int MIN_BLOOD_PARTICLES = 3;
+	private static final int MAX_BLOOD_PARTICLES = 15;
+	
 	private Vector2 moveAmount;
 	private Vector2 oldPos;
 	private Vector2 target;
 	
 	private boolean friendlyProjectile;
 	private float range, speed, damage;
+	private int knockback;
 	
-	public Projectile(Vector2 target, boolean friendlyProjectile, float speed, float range, float damage) {
+	public Projectile(Vector2 target, boolean friendlyProjectile, float speed, float range, float damage, int knockback) {
 		this.target = target;
 		this.friendlyProjectile = friendlyProjectile;
 		this.speed = speed;
 		this.range = range;
 		this.damage = damage;
+		this.knockback = knockback;
 	}
 	
 	public void init(Camera camera) {
@@ -91,11 +101,7 @@ public class Projectile extends Component {
 
 	private boolean friendlyCollide(Entity e) {
 		if (e instanceof Skeleton) {
-			Health health = e.getComponent(Health.class);
-			
-			if (health != null) 
-				health.damage(damage);
-			
+			collision(e);
 			return true;
 		}
 		
@@ -104,6 +110,26 @@ public class Projectile extends Component {
 
 	private boolean enemyCollide(Entity e) {
 		return false;
+	}
+	
+	private void collision(Entity e) {
+		Health health = e.getComponent(Health.class);
+		
+		if (health != null) 
+			health.damage(damage);
+		
+		moveAmount.nor();
+		e.addComponent(new Knockback(moveAmount, knockback));
+		
+		Vector2 pos = new Vector2(parent.getBounds().x, parent.getBounds().y);
+		
+		if (random.nextDouble() < BLOOD_CHANCE) 
+			parent.getManager().addEntity(new Blood(pos));
+		
+		int numParticles = random.nextInt(MAX_BLOOD_PARTICLES - MIN_BLOOD_PARTICLES) + MIN_BLOOD_PARTICLES;
+		
+		for (int i = 0; i < numParticles; i++)
+			parent.getManager().addEntity(new BloodParticle(pos, moveAmount));
 	}
 
 }

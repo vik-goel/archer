@@ -32,6 +32,12 @@ public abstract class Entity {
 			components.get(i).update(camera, dt);
 		}
 	}
+	
+	public void renderEarly(Camera camera, SpriteBatch batch) {
+		for (int i = 0; i < components.size(); i++) 
+			if (components.get(i).isInitialized()) 
+				components.get(i).renderEarly(camera, batch);
+	}
 
 	public void renderLit(Camera camera, SpriteBatch batch) {
 		for (int i = 0; i < components.size(); i++) 
@@ -73,6 +79,15 @@ public abstract class Entity {
 				return (T) components.get(i);
 		
 		return null;
+	}
+	
+	public void removeComponent(Component component) {
+		for (int i = 0; i < components.size(); i++) {
+			if (components.get(i) == component) {
+				components.remove(i);
+				return;
+			}
+		}
 	}
 
 	public EntityManager getManager() {

@@ -28,6 +28,9 @@ public abstract class Component {
 
 	public void update(Camera camera, float dt) {
 	}
+	
+	public void renderEarly(Camera camera, SpriteBatch batch) {
+	}
 
 	public void renderLit(Camera camera, SpriteBatch batch) {
 	}

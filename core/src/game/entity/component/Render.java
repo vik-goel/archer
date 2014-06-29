@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Render extends Component {
 
 	private Sprite sprite;
+	private boolean early = false;
 	
 	public Render(Sprite sprite) {
 		this.sprite = sprite;
@@ -19,9 +20,21 @@ public class Render extends Component {
 		sprite.setSize(parent.getBounds().width, parent.getBounds().height);
 	}
 
+	public void renderEarly(Camera camera, SpriteBatch batch) {
+		super.renderEarly(camera, batch);
+		
+		if (early)
+			render(batch);
+	}
+
 	public void renderLit(Camera camera, SpriteBatch batch) {
 		super.renderLit(camera, batch);
 		
+		if (!early)
+			render(batch);
+	}
+	
+	private void render(SpriteBatch batch) {
 		batch.begin();
 		sprite.draw(batch);
 		batch.end();
@@ -33,6 +46,12 @@ public class Render extends Component {
 
 	public void setRotation(float degrees) {
 		sprite.setRotation(degrees);
+	}
+
+	public Render setEarly(boolean early) {
+		this.early = early;
+		
+		return this;
 	}
 	
 	

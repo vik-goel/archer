@@ -17,12 +17,12 @@ public class Archer extends Entity {
 	public Archer(Vector2 pos, RayHandler handler) {
 		super(new Rectangle(pos.x, pos.y, 64, 64));
 		
-		addComponent(new ClickMove(500));
+		addComponent(new ClickMove(400));
 		addComponent(new Clickable(-17, -40, 32, 16));
 		addComponent(new SquadSprite("archer.png"));
 		addComponent(new ClickAttack(200, 100, new Color(1f, 0f, 1f, 0.25f), AttackType.ARROW, 10));
 		addComponent(new Health(100, 40));
-		addComponent(new SightRange(handler, 400));
+		addComponent(new SightRange(handler, 450));
 	}
 
 	public Rectangle getCollisionBounds() {
