@@ -32,4 +32,8 @@ public class Timer {
 	public double getRuntime() {
 		return getRuntimeNano() / NANO_TO_SECOND;
 	}
+	
+	public boolean isStarted() {
+		return started;
+	}
 }

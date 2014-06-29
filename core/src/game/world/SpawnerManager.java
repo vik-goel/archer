@@ -1,5 +1,6 @@
 package game.world;
 
+import game.entity.Spawner;
 import game.entity.component.MobSpawner;
 
 import java.util.ArrayList;
@@ -44,6 +45,14 @@ public class SpawnerManager {
 	
 	public static void addSpawner(MobSpawner spawner) {
 		spawners.add(spawner);
+	}
+	
+	public static Spawner spawnerAt(float x, float y) {
+		for (int i = 0; i < spawners.size(); i++) 
+			if (spawners.get(i).getParent().getBounds().contains(x, y)) 
+				return (Spawner) spawners.get(i).getParent();
+		
+		return null;
 	}
 	
 }

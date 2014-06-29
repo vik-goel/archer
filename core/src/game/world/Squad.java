@@ -5,6 +5,8 @@ import game.entity.Entity;
 import game.entity.component.ClickAttack;
 import game.entity.component.ClickMove;
 import game.entity.component.Clickable;
+import game.entity.component.Render;
+import game.entity.gui.Minimap;
 
 import java.util.ArrayList;
 
@@ -15,6 +17,7 @@ import com.badlogic.gdx.math.Vector2;
 public class Squad {
 
 	private ArrayList<Entity> squad;
+	private boolean firstUpdate = true;
 
 	public Squad(EntityManager manager, RayHandler handler) {
 		squad = new ArrayList<Entity>();
@@ -27,6 +30,11 @@ public class Squad {
 	}
 
 	public void update() {
+		if (firstUpdate) {
+			firstUpdate = false;
+			addToMinimap();
+		}
+		
 		destroyReferencesToRemovedEntities();
 		
 		if (!PhaseManager.isPlayerPhase())
@@ -36,6 +44,15 @@ public class Squad {
 
 		if (shouldChangePhase())
 			PhaseManager.changePhase();
+	}
+
+	private void addToMinimap() {
+		for (int i = 0; i < squad.size(); i++) {
+			Render render = squad.get(i).getComponent(Render.class);
+			
+			if (render != null)
+				Minimap.addObject(render);
+		}
 	}
 
 	private void destroyReferencesToRemovedEntities() {

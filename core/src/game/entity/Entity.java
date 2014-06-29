@@ -50,6 +50,12 @@ public abstract class Entity {
 			if (components.get(i).isInitialized()) 
 				components.get(i).renderUnlit(camera, batch);
 	}
+	
+	public void renderLate(Camera camera, SpriteBatch batch) {
+		for (int i = 0; i < components.size(); i++) 
+			if (components.get(i).isInitialized()) 
+				components.get(i).renderLate(camera, batch);
+	}
 
 	public void addComponent(Component component) {
 		components.add(component);

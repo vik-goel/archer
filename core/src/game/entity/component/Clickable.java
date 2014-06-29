@@ -14,6 +14,7 @@ public class Clickable extends Component {
 
 	private static final ShapeRenderer SHAPE_RENDERER = new ShapeRenderer();
 	private static final Color SELECTED_COLOR = new Color(0f, 1f, 0f, 1f);
+	private static boolean enabled = true;
 	
 	private boolean drawSelectedCircle = false;
 	private float xOffs, yOffs, circleWidth, circleHeight;
@@ -38,6 +39,11 @@ public class Clickable extends Component {
 
 		if (!PhaseManager.isPlayerPhase())
 			return;
+		
+		if (!enabled) {
+			wasSelected = selected = clicked = false;
+			return;
+		}
 		
 		wasSelected = false;
 		clicked = false;
@@ -98,6 +104,10 @@ public class Clickable extends Component {
 	public void select() {
 		selected = clicked = true;
 		wasSelected = false;
+	}
+	
+	public static void setEnabled(boolean enabled) {
+		Clickable.enabled = enabled;
 	}
 
 }

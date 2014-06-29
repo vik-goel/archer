@@ -38,4 +38,7 @@ public abstract class Component {
 	public void renderUnlit(Camera camera, SpriteBatch batch) {
 	}
 
+	public void renderLate(Camera camera, SpriteBatch batch) {
+	}
+
 }

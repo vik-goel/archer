@@ -22,7 +22,7 @@ public class Archer extends Entity {
 		addComponent(new SquadSprite("archer.png"));
 		addComponent(new ClickAttack(200, 100, new Color(1f, 0f, 1f, 0.25f), AttackType.ARROW, 10));
 		addComponent(new Health(100, 40));
-		addComponent(new SightRange(handler, 450));
+		addComponent(new SightRange(handler, 450, 10));
 	}
 
 	public Rectangle getCollisionBounds() {

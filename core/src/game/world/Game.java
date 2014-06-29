@@ -2,6 +2,8 @@ package game.world;
 
 import game.entity.Camera;
 import game.entity.Spawner;
+import game.entity.gui.Minimap;
+import game.entity.gui.TimerBar;
 import box2dLight.RayHandler;
 
 import com.badlogic.gdx.ApplicationAdapter;
@@ -30,7 +32,10 @@ public class Game extends ApplicationAdapter {
 
 		manager = new EntityManager(map);
 		manager.addEntity(camera = new Camera(new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight())));
-
+		
+		manager.addEntity(new TimerBar(PhaseManager.getTimer(), PhaseManager.ENEMY_PHASE_TIME));
+		manager.addEntity(new Minimap(camera, map.getWidth(), map.getHeight()));
+		
 		squad = new Squad(manager, handler);
 		PhaseManager.setSquad(squad);
 

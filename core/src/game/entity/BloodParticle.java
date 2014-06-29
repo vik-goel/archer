@@ -36,6 +36,7 @@ public class BloodParticle extends Entity {
 	private static final float MAX_SPEED = 2;
 	
 	private static final float ACCELERATION = 0.15f;
+	private static final float GRAVITY = 0.05f;
 	
 	private Color color;
 	private float life;
@@ -70,6 +71,7 @@ public class BloodParticle extends Entity {
 			remove();
 		
 		speed += ACCELERATION;
+		dir.y -= GRAVITY;
 		
 		Vector2 moveAmount = new Vector2(dir).scl(dt * speed);
 		Vector2 collision = Collision.collision(this, moveAmount);
