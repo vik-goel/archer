@@ -4,7 +4,7 @@ import game.entity.Camera;
 import game.entity.Entity;
 import game.entity.AttackFactory;
 import game.entity.AttackType;
-import game.entity.Skeleton;
+import game.entity.enemy.Skeleton;
 import game.world.PhaseManager;
 
 import java.util.ArrayList;
@@ -68,7 +68,9 @@ public class ClickAttack extends Component {
 		Entity target = getTarget();
 		
 		if (target != null) {
-			Vector2 pos = new Vector2(parent.getBounds().x + parent.getBounds().width / 2, parent.getBounds().y + parent.getBounds().height / 2);
+			Vector2 pos = new Vector2();
+			parent.getBounds().getCenter(pos);
+			
 			Vector2 targetPos = new Vector2(target.getBounds().x, target.getBounds().y);
 			
 			Entity attackEntity = AttackFactory.getProjectile(type, pos, targetPos, radius);
@@ -111,7 +113,7 @@ public class ClickAttack extends Component {
 	}
 
 	public void setAttack(Camera camera) {
-		if (clickable.isClicked()) {
+		if (clickable.wasClicked()) {
 			attacking = false;
 			setAttack = false;
 		}

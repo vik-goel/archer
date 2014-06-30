@@ -30,17 +30,31 @@ public class Health extends Component {
 	private float barWidth;
 	private float maxHealth, health;
 	private float yOffs;
+	private boolean renderLit;
 	
 	public Health(float maxHealth, float barWidth, float yOffs) {
 		this.maxHealth = maxHealth;
 		this.health = maxHealth;
 		this.barWidth = barWidth;
 		this.yOffs = yOffs;
+		this.renderLit = true;
 	}
 	
 	public void renderLit(Camera camera, SpriteBatch batch) {
 		super.renderLit(camera, batch);
 		
+		if (!renderLit)
+			render(camera);
+	}
+	
+	public void renderUnlit(Camera camera, SpriteBatch batch) {
+		super.renderUnlit(camera, batch);
+		
+		if (renderLit)
+			render(camera);
+	}
+	
+	private void render(Camera camera) {
 		float x = parent.getBounds().x + (parent.getBounds().width - barWidth) / 2 - camera.getBounds().x;
 		float y = parent.getBounds().y + parent.getBounds().height - camera.getBounds().y + yOffs;
 		
@@ -85,6 +99,11 @@ public class Health extends Component {
 			parent.remove();
 		else if (health > maxHealth)
 			health = maxHealth;
+	}
+	
+	public Health setRenderLit(boolean renderLit) {
+		this.renderLit = renderLit;
+		return this;
 	}
 	
 }

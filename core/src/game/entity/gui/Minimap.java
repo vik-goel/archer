@@ -97,7 +97,7 @@ public class Minimap extends Entity {
 		super.update(camera, dt);
 
 		activate();
-		fadeAlpha();
+		fadeAlpha(dt);
 		destroyRemovedReferences();
 	}
 
@@ -117,18 +117,18 @@ public class Minimap extends Entity {
 			Camera.setMovementEnabled(true);
 	}
 
-	private void fadeAlpha() {
+	private void fadeAlpha(float dt) {
 		if (active) {
 			if (alphaSpeed < 0)
 				alphaSpeed = 0;
-			alphaSpeed += ALPHA_ACCELERATION;
+			alphaSpeed += ALPHA_ACCELERATION * dt;
 		} else {
 			if (alphaSpeed > 0)
 				alphaSpeed = 0;
-			alphaSpeed -= ALPHA_ACCELERATION;
+			alphaSpeed -= ALPHA_ACCELERATION * dt;
 		}
 		
-		alpha += alphaSpeed ;
+		alpha += alphaSpeed * dt;
 		
 		if (alpha > 1)
 			alpha = 1;

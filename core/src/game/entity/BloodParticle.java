@@ -25,11 +25,11 @@ public class BloodParticle extends Entity {
 	
 	private static final float POS_VARIANCE = 30;
 	private static final float MIN_WIDTH = 1;
-	private static final float MAX_WIDTH = 6;
+	private static final float MAX_WIDTH = 8;
 	private static final float HEIGHT_VARIANCE = 3;
 	
-	private static final float MIN_LIFE = 10;
-	private static final float MAX_LIFE = 25;
+	private static final float MIN_LIFE = 25;
+	private static final float MAX_LIFE = 50;
 	
 	private static final double DIR_VARIANCE = Math.PI / 2;
 	private static final float MIN_SPEED = 0.5f;

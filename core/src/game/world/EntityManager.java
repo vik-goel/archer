@@ -52,12 +52,12 @@ public class EntityManager {
 	}
 
 	public void renderUnlit(Camera camera) {
-		renderLate(camera);
-		
 		camera.projectBatch(batch);
 
 		for (int i = 0; i < entities.size(); i++)
 			entities.get(i).renderUnlit(camera, batch);
+		
+		renderLate(camera);
 	}
 
 	private void renderLate(Camera camera) {
@@ -87,7 +87,8 @@ public class EntityManager {
 		ArrayList<Entity> result = new ArrayList<Entity>();
 
 		for (int i = 0; i < entities.size(); i++) {
-			Vector2 ePos = new Vector2(entities.get(i).getBounds().x, entities.get(i).getBounds().y);
+			Vector2 ePos = new Vector2();
+			entities.get(i).getBounds().getCenter(ePos);
 
 			if (ePos.dst(pos) > radius)
 				continue;

@@ -1,5 +1,7 @@
-package game.entity;
+package game.entity.enemy;
 
+import game.entity.Camera;
+import game.entity.Entity;
 import game.entity.component.SkeletonPathFollower;
 import game.entity.movement.Pathfinder;
 import game.world.PhaseManager;

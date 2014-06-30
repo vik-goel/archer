@@ -1,5 +1,7 @@
-package game.entity;
+package game.entity.friendly;
 
+import game.entity.AttackType;
+import game.entity.Entity;
 import game.entity.component.ClickAttack;
 import game.entity.component.ClickMove;
 import game.entity.component.Clickable;
@@ -20,9 +22,9 @@ public class Archer extends Entity {
 		addComponent(new ClickMove(400));
 		addComponent(new Clickable(-17, -38, 32, 16));
 		addComponent(new SquadSprite("archer.png"));
-		addComponent(new ClickAttack(200, 100, new Color(1f, 0f, 1f, 0.25f), AttackType.ARROW, 10));
+		addComponent(new ClickAttack(350, 100, new Color(1f, 0f, 1f, 0.15f), AttackType.ARROW, 20));
 		addComponent(new Health(100, 30, -8));
-		addComponent(new SightRange(handler, 450, 10));
+		addComponent(new SightRange(handler, 700, 10));
 	}
 
 	public Rectangle getCollisionBounds() {

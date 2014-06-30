@@ -1,6 +1,7 @@
 package game.entity;
 
 import game.entity.component.Render;
+import game.entity.movement.Collision;
 
 import java.util.Random;
 
@@ -15,6 +16,8 @@ public class Blood extends Entity {
 	private static Texture texture = new Texture("blood.png");
 	private static Random random = new Random();
 
+	private boolean firstUpdate = true;
+	
 	public Blood(Vector2 pos) {
 		super(new Rectangle(pos.x, pos.y, 0, 0));
 
@@ -24,8 +27,21 @@ public class Blood extends Entity {
 		bounds.height = sprite.getHeight();
 		bounds.x -= sprite.getWidth() / 2;
 		bounds.y -= sprite.getHeight() / 2;
-
+		
 		addComponent(new Render(sprite).setEarly(true));
+	}
+
+	public void update(Camera camera, float dt) {
+		super.update(camera, dt);
+		
+		if (firstUpdate) {
+			firstUpdate = false;
+			
+			Vector2 collision = Collision.collision(this, new Vector2());
+			
+			if (collision.x != 1 || collision.y != 1)
+				remove();
+		}
 	}
 
 	private static Sprite getSprite() {

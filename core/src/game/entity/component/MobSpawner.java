@@ -1,8 +1,8 @@
 package game.entity.component;
 
 import game.entity.Camera;
-import game.entity.Skeleton;
-import game.entity.SkeletonGroup;
+import game.entity.enemy.Skeleton;
+import game.entity.enemy.SkeletonGroup;
 import game.world.PhaseManager;
 import game.world.SpawnerManager;
 import game.world.Squad;

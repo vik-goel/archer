@@ -1,7 +1,7 @@
 package game.world;
 
 import game.entity.Camera;
-import game.entity.Spawner;
+import game.entity.enemy.Spawner;
 import game.entity.gui.Minimap;
 import game.entity.gui.TimerBar;
 import box2dLight.RayHandler;
@@ -41,6 +41,7 @@ public class Game extends ApplicationAdapter {
 		PhaseManager.setSquad(squad);
 
 		manager.addEntity(new Spawner(new Vector2(770, 500), squad));
+		manager.addEntity(new Spawner(new Vector2(155, 825), squad));
 
 		fpsLogger = new FPSLogger();
 		
@@ -70,6 +71,7 @@ public class Game extends ApplicationAdapter {
 			firstUpdate = false;
 			SpawnerManager.setSpawners();
 		}
+		
 	}
 
 	private void renderWorld() {

@@ -21,7 +21,7 @@ public class Clickable extends Component {
 	
 	private boolean wasSelected = false;
 	private boolean selected = false;
-	private boolean clicked = false;
+	private boolean clicked = false, wasClicked = false;
 	
 	public Clickable() {
 	}
@@ -41,11 +41,12 @@ public class Clickable extends Component {
 			return;
 		
 		if (!enabled) {
-			wasSelected = selected = clicked = false;
+			wasSelected = selected = clicked = wasClicked = false;
 			return;
 		}
 		
 		wasSelected = false;
+		wasClicked = clicked;
 		clicked = false;
 		
 		if (!(Gdx.input.isButtonPressed(0) && Gdx.input.justTouched()))
@@ -94,9 +95,16 @@ public class Clickable extends Component {
 		return clicked;
 	}
 	
+	public boolean wasClicked() {
+		return wasClicked;
+	}
+	
 	public void deselect() {
 		if (selected)
 			wasSelected = true;
+		
+		if (clicked)
+			wasClicked = true;
 		
 		selected = clicked = false;
 	}
@@ -104,6 +112,7 @@ public class Clickable extends Component {
 	public void select() {
 		selected = clicked = true;
 		wasSelected = false;
+		wasClicked = false;
 	}
 	
 	public static void setEnabled(boolean enabled) {

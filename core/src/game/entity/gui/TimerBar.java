@@ -4,7 +4,9 @@ import game.entity.Camera;
 import game.entity.Entity;
 import game.world.Timer;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -12,13 +14,15 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class TimerBar extends Entity {
 
-	private static final Color BAR_COLOR = new Color(0.5f, 0.5f, 0.5f, 1f);
-	private static final Color TIME_COLOR = new Color(1f, 1f, 0f, 1f);
+	private static final Color BAR_COLOR = new Color(0f, 0f, 0f, 0f);
+	private static final Color TIME_COLOR = new Color(194f / 255f, 59f / 255f, 34f / 255f, 1f);
+	private static final Color OUTLINE_COLOR = new Color(207f / 255f, 207f / 255f, 196f / 255f, 1f);
 	
-	private static final float WIDTH = 0.8f;
+	private static final float WIDTH = 0.9f;
 	private static final float HEIGHT = 0.05f;
-	private static final float YOFFS = 0.1f;
+	private static final float YOFFS = 0.01f;
 	private static final float TIME_SPACING = 5;
+	private static final float OUTLINE_THICKNESS = 2;
 	
 	private static ShapeRenderer shapeRenderer;
 	
@@ -49,6 +53,9 @@ public class TimerBar extends Entity {
 		if (!timer.isStarted())
 			return;
 		
+		Gdx.gl.glEnable(GL20.GL_BLEND);
+	    Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+		
 		shapeRenderer.begin(ShapeType.Filled);
 		
 		shapeRenderer.setColor(BAR_COLOR);
@@ -65,6 +72,15 @@ public class TimerBar extends Entity {
 		shapeRenderer.rect(timeBounds.x, timeBounds.y, timeBounds.width * (1 - (float)(timer.getRuntime() / phaseTime)), timeBounds.height);
 		
 		shapeRenderer.end();
+		
+		Gdx.gl20.glLineWidth(OUTLINE_THICKNESS);
+		
+		shapeRenderer.begin(ShapeType.Line);
+		shapeRenderer.setColor(OUTLINE_COLOR);
+		shapeRenderer.rect(bounds.x + OUTLINE_THICKNESS / 2, bounds.y + OUTLINE_THICKNESS / 2, bounds.width - OUTLINE_THICKNESS, bounds.height - OUTLINE_THICKNESS);
+		shapeRenderer.end();
+		
+		Gdx.gl.glDisable(GL20.GL_BLEND);
 	}
 
 }

@@ -1,7 +1,7 @@
 package game.world;
 
-import game.entity.Spawner;
 import game.entity.component.MobSpawner;
+import game.entity.enemy.Spawner;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -13,8 +13,8 @@ public class SpawnerManager {
 	private static final int MIN_ACTIVE_SPAWNERS = 1;
 	private static final int MAX_ACTIVE_SPAWNERS = 3;
 	
-	private static final int MIN_ENTITIES = 3;
-	private static final int MAX_ENTITIES = 20;
+	private static final int MIN_ENTITIES = 4;
+	private static final int MAX_ENTITIES = 12;
 	
 	private static ArrayList<MobSpawner> spawners = new ArrayList<MobSpawner>();
 	

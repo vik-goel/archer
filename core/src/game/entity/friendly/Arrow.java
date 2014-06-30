@@ -1,5 +1,6 @@
-package game.entity;
+package game.entity.friendly;
 
+import game.entity.Entity;
 import game.entity.component.Projectile;
 import game.entity.component.Render;
 
@@ -17,7 +18,7 @@ public class Arrow extends Entity {
 	public Arrow(Vector2 pos, Vector2 target, float range) {
 		super(new Rectangle(pos.x, pos.y, 32, 12));
 		addComponent(new Render(new Sprite(new Texture("arrow.png"))));
-		addComponent(new Projectile(collisionSound, target, true, 6, range, 25, 75));
+		addComponent(new Projectile(collisionSound, target, true, 6, range, 25, 12));
 	}
 
 }

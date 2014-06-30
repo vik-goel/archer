@@ -2,7 +2,7 @@ package game.world;
 
 public class PhaseManager {
 
-	public static final double ENEMY_PHASE_TIME = 10;
+	public static final double ENEMY_PHASE_TIME = 7.5;
 
 	private static boolean playerPhase = true;
 	private static Timer timer = new Timer();

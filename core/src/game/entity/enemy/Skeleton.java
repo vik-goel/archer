@@ -1,5 +1,6 @@
-package game.entity;
+package game.entity.enemy;
 
+import game.entity.Entity;
 import game.entity.component.Health;
 import game.entity.component.Render;
 import game.entity.component.SkeletonPathFollower;
@@ -21,7 +22,7 @@ public class Skeleton extends Entity {
 		addComponent(new Render(new Sprite(texture, 0, 128, 64, 64)));
 		addComponent(new SkeletonPathFollower(3));
 		addComponent(new SkeletonAttack(squad, 50, 5, 20));
-		addComponent(new Health(40, 30, -8));
+		addComponent(new Health(40, 30, -8).setRenderLit(false));
 	}
 
 }

@@ -1,5 +1,6 @@
-package game.entity;
+package game.entity.enemy;
 
+import game.entity.Entity;
 import game.entity.component.MobSpawner;
 import game.entity.component.Render;
 import game.world.Squad;

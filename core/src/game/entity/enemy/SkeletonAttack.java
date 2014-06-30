@@ -1,7 +1,10 @@
-package game.entity;
+package game.entity.enemy;
 
+import game.entity.Camera;
+import game.entity.Entity;
 import game.entity.component.Component;
 import game.entity.component.Health;
+import game.world.PhaseManager;
 import game.world.Squad;
 
 import com.badlogic.gdx.math.Vector2;
@@ -23,6 +26,9 @@ public class SkeletonAttack extends Component {
 
 	public void update(Camera camera, float dt) {
 		super.update(camera, dt);
+		
+		if (!PhaseManager.isEnemyPhase())
+			return;
 		
 		attackDelayCounter += dt;
 		

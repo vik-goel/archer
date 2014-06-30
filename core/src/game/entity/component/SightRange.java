@@ -1,7 +1,7 @@
 package game.entity.component;
 
 import game.entity.Camera;
-import game.entity.Spawner;
+import game.entity.enemy.Spawner;
 import game.entity.gui.Minimap;
 import game.world.Map;
 import game.world.SpawnerManager;
