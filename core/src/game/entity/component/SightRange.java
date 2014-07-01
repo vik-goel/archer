@@ -95,6 +95,9 @@ public class SightRange extends Component {
 		discover(x, y + 1, range - 1);
 		discover(x, y - 1, range - 1);
 	}
-	
+
+	public static void resetSeen() {
+		seen = null;
+	}
 	
 }

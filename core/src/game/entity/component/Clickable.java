@@ -110,7 +110,7 @@ public class Clickable extends Component {
 	}
 	
 	public void select() {
-		selected = clicked = true;
+		selected = true;
 		wasSelected = false;
 		wasClicked = false;
 	}

@@ -44,4 +44,11 @@ public class PhaseManager {
 	public static Timer getTimer() {
 		return timer;
 	}
+
+	public static void setPlayerPhase() {
+		if (isEnemyPhase())
+			timer.stop();
+		
+		playerPhase = true;
+	}
 }

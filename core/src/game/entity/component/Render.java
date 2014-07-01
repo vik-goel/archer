@@ -16,7 +16,9 @@ public class Render extends Component {
 
 	public void update(Camera camera, float dt) {
 		super.update(camera, dt);
-		sprite.setBounds(parent.getBounds().x, parent.getBounds().y, parent.getBounds().width, parent.getBounds().height);
+		
+		if (sprite != null)
+			sprite.setBounds(parent.getBounds().x, parent.getBounds().y, parent.getBounds().width, parent.getBounds().height);
 	}
 
 	public void renderEarly(Camera camera, SpriteBatch batch) {
@@ -34,6 +36,9 @@ public class Render extends Component {
 	}
 	
 	private void render(SpriteBatch batch) {
+		if (sprite == null)
+			return;
+		
 		batch.begin();
 		sprite.draw(batch);
 		batch.end();
@@ -55,6 +60,11 @@ public class Render extends Component {
 		this.early = early;
 		
 		return this;
+	}
+
+	public void dispose() {
+		super.dispose();
+		sprite.getTexture().dispose();
 	}
 	
 }

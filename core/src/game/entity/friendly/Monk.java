@@ -19,12 +19,12 @@ public class Monk extends Entity {
 	public Monk(Vector2 pos, RayHandler handler) {
 		super(new Rectangle(pos.x, pos.y, 64, 64));
 		
-		addComponent(new ClickMove(400));
+		addComponent(new ClickMove(Friendly.MOVE_RADIUS));
 		addComponent(new Clickable(-17, -38, 32, 16));
 		addComponent(new SquadSprite("monk.png"));
 		addComponent(new ClickAttack(250, 120, new Color(.5f, .7f, .4f, 0.15f), AttackType.ENERGY_BALL, 40));
-		addComponent(new Health(100, 30, -8));
-		addComponent(new SightRange(handler, 700, 10));
+		addComponent(new Health(Friendly.MAX_HEALTH, 30, -8));
+		addComponent(new SightRange(handler, Friendly.SIGHT_RANGE, Friendly.DISCOVER_RANGE));
 	}
 
 	public Rectangle getCollisionBounds() {

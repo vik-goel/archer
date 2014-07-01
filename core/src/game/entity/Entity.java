@@ -8,8 +8,9 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Disposable;
 
-public abstract class Entity {
+public abstract class Entity implements Disposable {
 
 	private ArrayList<Component> components;
 	private boolean removed = false;
@@ -110,6 +111,11 @@ public abstract class Entity {
 
 	public void setMap(Map map) {
 		this.map = map;
+	}
+
+	public void dispose() {
+		for (int i = 0; i < components.size(); i++) 
+			components.get(i).dispose();
 	}
 
 }

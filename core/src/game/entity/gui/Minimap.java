@@ -232,5 +232,12 @@ public class Minimap extends Entity {
 		if (!renders.contains(render))
 			renders.add(render);
 	}
+	
+	public void dispose() {
+		super.dispose();
+		
+		renders.clear();
+		frameBuffer.dispose();
+	}
 
 }

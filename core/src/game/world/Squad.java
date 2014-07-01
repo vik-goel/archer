@@ -163,9 +163,27 @@ public class Squad {
 	}
 
 	private void destroyReferencesToRemovedEntities() {
-		for (int i = 0; i < squad.size(); i++) 
-			if (squad.get(i).isRemoved())
+		for (int i = 0; i < squad.size(); i++) {
+			if (squad.get(i).isRemoved()) {
+				Clickable clickable = squad.get(i).getComponent(Clickable.class);
+				
+				if (clickable != null && clickable.isSelected()) {
+					int nextSelect = i + 1;
+					
+					if (nextSelect >= squad.size())
+						nextSelect = 0;
+					
+					if (nextSelect < squad.size()) {
+						Clickable nextClickable = squad.get(nextSelect).getComponent(Clickable.class);
+						
+						if (nextClickable != null)
+							nextClickable.select();
+					}
+				}
+				
 				squad.remove(i--);
+			}
+		}
 	}
 
 	private void ensureOnlyOneEntityIsSelected() {
@@ -195,6 +213,9 @@ public class Squad {
 	}
 	
 	private boolean shouldChangePhase() {
+		if (squad.isEmpty())
+			return false;
+		
 		for (int i = 0; i < squad.size(); i++) {
 			ClickAttack clickAttack = squad.get(i).getComponent(ClickAttack.class);
 			if (clickAttack == null)

@@ -19,12 +19,12 @@ public class Knight extends Entity {
 	public Knight(Vector2 pos, RayHandler handler) {
 		super(new Rectangle(pos.x, pos.y, 64, 64));
 		
-		addComponent(new ClickMove(400));
+		addComponent(new ClickMove(Friendly.MOVE_RADIUS));
 		addComponent(new Clickable(-17, -38, 32, 16));
 		addComponent(new SquadSprite("knight.png"));
 		addComponent(new ClickAttack(75, 110, new Color(.8f, .2f, .2f, 0.25f), AttackType.SWORD, 15));
-		addComponent(new Health(100, 30, -8));
-		addComponent(new SightRange(handler, 700, 10));
+		addComponent(new Health(Friendly.MAX_HEALTH, 30, -8));
+		addComponent(new SightRange(handler, Friendly.SIGHT_RANGE, Friendly.DISCOVER_RANGE));
 	}
 
 	public Rectangle getCollisionBounds() {

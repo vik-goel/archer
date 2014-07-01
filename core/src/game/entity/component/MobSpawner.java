@@ -20,10 +20,11 @@ public class MobSpawner extends Component {
 	private static final Random random = new Random();
 	private static final float SPAWN_VARIANCE = 30;
 
-	private static final Sprite ACTIVE = new Sprite(new Texture("spawner_active.png"));
-	private static final Sprite INACTIVE = new Sprite(new Texture("spawner_inactive.png"));
-
 	private static final BitmapFont FONT = new BitmapFont();
+	
+	private Sprite active = new Sprite(new Texture("spawner_active.png"));
+	private Sprite inactive = new Sprite(new Texture("spawner_inactive.png"));
+	private boolean isActive = true;
 	
 	private Squad squad;
 
@@ -108,7 +109,9 @@ public class MobSpawner extends Component {
 		Render render = parent.getComponent(Render.class);
 
 		if (render != null)
-			render.setSprite(INACTIVE);
+			render.setSprite(inactive);
+		
+		isActive = false;
 	}
 
 	public void activate(int numEntities) {
@@ -117,7 +120,17 @@ public class MobSpawner extends Component {
 		Render render = parent.getComponent(Render.class);
 
 		if (render != null)
-			render.setSprite(ACTIVE);
+			render.setSprite(active);
+		
+		isActive = true;
+	}
+	
+	public void dispose() {
+		super.dispose();
+		
+		if (isActive)
+			inactive.getTexture().dispose();
+		else active.getTexture().dispose();
 	}
 
 }

@@ -20,12 +20,12 @@ public class Bandit extends Entity {
 	public Bandit(Vector2 pos, RayHandler handler) {
 		super(new Rectangle(pos.x, pos.y, 64, 64));
 		
-		addComponent(new ClickMove(400));
+		addComponent(new ClickMove(Friendly.MOVE_RADIUS));
 		addComponent(new Clickable(-17, -38, 32, 16));
 		addComponent(new SquadSprite("bandit.png"));
 		addComponent(new ClickAttack(140, 225, new Color(1f, 0.2f, 0.1f, 0.15f), AttackType.THROWING_STAR, 25));
-		addComponent(new Health(100, 30, -8));
-		addComponent(new SightRange(handler, 700, 10));
+		addComponent(new Health(Friendly.MAX_HEALTH, 30, -8));
+		addComponent(new SightRange(handler, Friendly.SIGHT_RANGE, Friendly.DISCOVER_RANGE));
 	}
 
 	public Rectangle getCollisionBounds() {

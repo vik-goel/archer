@@ -12,8 +12,9 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Disposable;
 
-public class Map {
+public class Map implements Disposable {
 
 	public static final float TILE_SIZE = 32;
 
@@ -97,6 +98,11 @@ public class Map {
 	
 	public boolean isWall(int x, int y) {
 		return wallLayer.getCell(x, y) != null;
+	}
+
+	public void dispose() {
+		tiledMap.dispose();
+		renderer.dispose();
 	}
 
 }

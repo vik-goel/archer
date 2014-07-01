@@ -1,11 +1,12 @@
 package game.entity.component;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 import game.entity.Camera;
 import game.entity.Entity;
 
-public abstract class Component {
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Disposable;
+
+public abstract class Component implements Disposable {
 
 	protected Entity parent;
 	private boolean initialized = false;
@@ -39,6 +40,9 @@ public abstract class Component {
 	}
 
 	public void renderLate(Camera camera, SpriteBatch batch) {
+	}
+
+	public void dispose() {
 	}
 
 }
