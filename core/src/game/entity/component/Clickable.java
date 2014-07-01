@@ -45,6 +45,11 @@ public class Clickable extends Component {
 			return;
 		}
 		
+		if (isSelected()) {
+			Vector2 centerPos = new Vector2();
+			parent.getBounds().getCenter(centerPos);
+		}
+		
 		wasSelected = false;
 		wasClicked = clicked;
 		clicked = false;
@@ -63,6 +68,7 @@ public class Clickable extends Component {
 		} else {
 			this.wasSelected = wasSelected;
 		}
+		
 	}
 	
 	public void renderLit(Camera camera, SpriteBatch batch) {

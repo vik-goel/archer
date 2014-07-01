@@ -9,19 +9,21 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		
+		config.title = "Archer";
+		
+		config.x = -1;
+		config.y = -1;
 		config.width = 800;
 		config.height = 600;
-		config.title = "Archer";
 		config.resizable = false;
-		config.samples = 4;
 		
 		config.backgroundFPS = -1;
 		config.foregroundFPS = 60;
 		config.vSyncEnabled = true;
+		
 		config.useGL30 = false;
 		config.allowSoftwareMode = true;
-		config.x = -1;
-		config.y = -1;
+		config.samples = 4;
 		
 		new LwjglApplication(new Game(), config);
 	}

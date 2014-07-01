@@ -1,5 +1,6 @@
 package game.world;
 
+import game.entity.Camera;
 import game.entity.Entity;
 import game.entity.component.ClickAttack;
 import game.entity.component.ClickMove;
@@ -26,19 +27,21 @@ public class Squad {
 	private boolean tabPushed = false;
 	private boolean notPlayerPhase = true;
 	
-	public Squad(EntityManager manager, RayHandler handler) {
+	public Squad(EntityManager manager, RayHandler handler, Vector2 squadPos) {
 		squad = new ArrayList<Entity>();
 		
-		squad.add(new Monk(new Vector2(160, 120), handler));
-		squad.add(new Bandit(new Vector2(130, 80), handler));
-		squad.add(new Knight(new Vector2(80, 60), handler));
-		squad.add(new Archer(new Vector2(100, 100), handler));
+		final float deviance = 20;
+		
+		squad.add(new Monk(new Vector2(deviance, deviance).add(squadPos), handler));
+		squad.add(new Bandit(new Vector2(deviance, -deviance).add(squadPos), handler));
+		squad.add(new Knight(new Vector2(-deviance, -deviance).add(squadPos), handler));
+		squad.add(new Archer(new Vector2(-deviance, deviance).add(squadPos), handler));
 		
 		for (int i = 0; i < squad.size(); i++)
 			manager.addEntity(squad.get(i));
 	}
 
-	public void update() {
+	public void update(Camera camera) {
 		if (firstUpdate) {
 			firstUpdate = false;
 			addToMinimap();
@@ -52,30 +55,37 @@ public class Squad {
 		}
 		
 		if (notPlayerPhase) 
-			selectAnyEntity();
+			selectAnyEntity(camera);
 		
 		notPlayerPhase = false;
 
-		selectNewEntity();
+		selectNewEntity(camera);
 		ensureOnlyOneEntityIsSelected();
-		tabOverToNewEntity();
+		tabOverToNewEntity(camera);
 
 		if (shouldChangePhase())
 			PhaseManager.changePhase();
 	}
 
-	private void selectAnyEntity() {
+	private void selectAnyEntity(Camera camera) {
 		for (int i = 0; i < squad.size(); i++) {
 			Clickable clickable = squad.get(i).getComponent(Clickable.class);
 		
 			if (clickable != null) {
 				clickable.select();
+				center(camera, squad.get(i));
 				return;
 			}
 		}
 	}
 
-	private void selectNewEntity() {
+	private void center(Camera camera, Entity entity) {
+		Vector2 center = new Vector2();
+		entity.getBounds().getCenter(center);
+		camera.centerAround(center);
+	}
+
+	private void selectNewEntity(Camera camera) {
 		for (int i = 0; i < squad.size(); i++) {
 			Clickable clickable = squad.get(i).getComponent(Clickable.class);
 			
@@ -92,6 +102,7 @@ public class Squad {
 						
 						if (otherAttack != null && !otherAttack.hasSetAttack() && otherClickable != null) {
 							otherClickable.select();
+							center(camera,squad.get(j));
 							return;
 						}
 					}
@@ -100,7 +111,7 @@ public class Squad {
 		}
 	}
 	
-	private void tabOverToNewEntity() {
+	private void tabOverToNewEntity(Camera camera) {
 		if (!Gdx.input.isKeyPressed(Input.Keys.TAB))
 			tabPushed = false;
 		
@@ -143,6 +154,7 @@ public class Squad {
 			
 			if (!attack.hasSetAttack() && !clickable.isSelected()) {
 				clickable.select();
+				center(camera, clickable.getParent());
 				setNewSelected = true;
 				break;
 			}

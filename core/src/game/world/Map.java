@@ -1,13 +1,23 @@
 package game.world;
 
 import game.entity.Camera;
+import game.entity.Entity;
+import game.entity.MoneyBag;
+import game.entity.Staircase;
+import game.entity.enemy.Spawner;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -82,20 +92,20 @@ public class Map implements Disposable {
 
 	public TextureRegion getTextureRegion(int x, int y) {
 		Cell cell = floorLayer.getCell(x, y);
-		
+
 		if (cell == null)
 			cell = wallLayer.getCell(x, y);
-		
+
 		if (cell == null)
 			return null;
-		
+
 		return cell.getTile().getTextureRegion();
 	}
-	
+
 	public boolean isFloor(int x, int y) {
 		return floorLayer.getCell(x, y) != null;
 	}
-	
+
 	public boolean isWall(int x, int y) {
 		return wallLayer.getCell(x, y) != null;
 	}
@@ -103,6 +113,45 @@ public class Map implements Disposable {
 	public void dispose() {
 		tiledMap.dispose();
 		renderer.dispose();
+	}
+
+	public void addEntities(EntityManager manager, int levelNum, Squad squad) {
+		MapLayer objectsLayer = (MapLayer) tiledMap.getLayers().get("objects");
+		
+		if (objectsLayer == null)
+			return;
+		
+		MapObjects objects = objectsLayer.getObjects();
+
+		int numObjects = objects.getCount();
+
+		for (int i = 0; i < numObjects; i++) {
+			MapObject object = objects.get(i);
+			Entity e = getEntityFromObject((RectangleMapObject) object, levelNum, squad);
+
+			if (e != null)
+				manager.addEntity(e);
+		}
+	}
+
+	private Entity getEntityFromObject(RectangleMapObject object, int levelNum, Squad squad) {
+		String name = object.getName();
+		
+		Rectangle rect = object.getRectangle();
+		Vector2 pos = new Vector2(rect.getX(), rect.getY());
+
+		Entity e = null;
+
+		if (name.equals("up staircase"))
+			e = new Staircase(pos, false, levelNum - 1, squad);
+		else if (name.equals("down staircase"))
+			e = new Staircase(pos, true, levelNum + 1, squad);
+		else if (name.equals("mob spawner"))
+			e = new Spawner(pos, squad);
+		else if (name.equals("money bag"))
+			e = new MoneyBag(pos);
+
+		return e;
 	}
 
 }

@@ -38,7 +38,7 @@ public class Minimap extends Entity {
 	private boolean active = false;
 
 	private boolean mDown;
-	private float tileWidth, tileHeight;
+	private float tileSize;
 
 	private boolean[][] discovered;
 
@@ -59,14 +59,25 @@ public class Minimap extends Entity {
 		bounds.width = camera.getBounds().width * WIDTH;
 		bounds.height = camera.getBounds().height * HEIGHT;
 
+		float maxWidth = bounds.width;
+		float maxHeight = bounds.height;
+		
 		if (bounds.width > bounds.height)
 			bounds.width = bounds.height;
 		else if (bounds.height > bounds.width)
 			bounds.height = bounds.width;
+		
+		bounds.height *= (float) mapHeight / (float) mapWidth;
+	
+		float scaleFactor = Math.min(maxWidth / bounds.width, maxHeight / bounds.height);
+		bounds.width *= scaleFactor;
+		bounds.height *= scaleFactor;
 
-		tileWidth = (bounds.width - SPACING) / mapWidth;
-		tileHeight = (bounds.height - SPACING) / mapHeight;
+		float tileWidth = (bounds.width - SPACING) / mapWidth;
+		float tileHeight = (bounds.height - SPACING) / mapHeight;
 
+		tileSize = Math.min(tileWidth, tileHeight);
+		
 		bounds.x = (camera.getBounds().width - bounds.width) / 2;
 		bounds.y = (camera.getBounds().height - bounds.height) / 2;
 
@@ -178,8 +189,8 @@ public class Minimap extends Entity {
 	}
 
 	private void renderObjects(Camera camera, SpriteBatch batch) {
-		float xScale = tileWidth / Map.TILE_SIZE;
-		float yScale = tileHeight / Map.TILE_SIZE;
+		float xScale = tileSize / Map.TILE_SIZE;
+		float yScale = tileSize / Map.TILE_SIZE;
 
 		for (Render render : renders) {
 			Sprite sprite = render.getSprite();
@@ -209,8 +220,8 @@ public class Minimap extends Entity {
 
 		minimap.discovered[x][y] = true;
 
-		float xPos = x * minimap.tileWidth + SPACING / 2f;
-		float yPos = (minimap.discovered[0].length - y - 1) * minimap.tileHeight + SPACING / 2f;
+		float xPos = x * minimap.tileSize + SPACING / 2f;
+		float yPos = (minimap.discovered[0].length - y - 1) * minimap.tileSize + SPACING / 2f;
 
 		SpriteBatch batch = new SpriteBatch();
 
@@ -219,9 +230,9 @@ public class Minimap extends Entity {
 		batch.begin();
 
 		if (region != null)
-			batch.draw(region, xPos, yPos, minimap.tileWidth, minimap.tileHeight);
+			batch.draw(region, xPos, yPos, minimap.tileSize, minimap.tileSize);
 		else
-			batch.draw(texture, xPos, yPos, minimap.tileWidth, minimap.tileHeight);
+			batch.draw(texture, xPos, yPos, minimap.tileSize, minimap.tileSize);
 
 		batch.end();
 

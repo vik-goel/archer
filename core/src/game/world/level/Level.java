@@ -28,7 +28,7 @@ public abstract class Level {
 	
 	private boolean firstUpdate = true;
 	
-	public Level(String mapPath, int levelNum) {
+	public Level(String mapPath, int levelNum, Vector2 squadPos) {
 		world = new World(new Vector2(), true);
 		handler = new RayHandler(world);
 		
@@ -43,14 +43,15 @@ public abstract class Level {
 		
 		manager.addEntity(new LevelTransition(camera, levelNum));
 		
-		squad = new Squad(manager, handler);
+		squad = new Squad(manager, handler, squadPos);
 		PhaseManager.setSquad(squad);
-	
+		
+		map.addEntities(manager, levelNum, squad);
 	}
 	
 	public void update(float dt) {
 		manager.update(camera, dt);
-		squad.update();
+		squad.update(camera);
 		handler.update();
 		
 		if (firstUpdate) {

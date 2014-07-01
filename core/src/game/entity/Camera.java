@@ -158,8 +158,6 @@ public class Camera extends Entity {
 			orthoCamera.translate(bounds.x - oldPos.x, bounds.y - oldPos.y);
 			orthoCamera.update();
 			oldPos.set(bounds.x, bounds.y);
-		} else {
-			newPos = null;
 		}
 	}
 

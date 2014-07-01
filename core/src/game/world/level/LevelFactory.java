@@ -7,10 +7,10 @@ public class LevelFactory {
 		case 1: 
 			return new TestLevel(levelNum);
 		case 2: 
-			return new TestLevel(levelNum);
+			return new TestLevel2(levelNum);
 		}
 		
-		return null;
+		throw new IllegalArgumentException("Error: Level " + levelNum + " does not exist!");
 	}
 	
 }

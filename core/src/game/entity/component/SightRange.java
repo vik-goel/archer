@@ -13,7 +13,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class SightRange extends Component {
 
-	private static int[][] seen;
+	private static final double SQRT_2 = Math.sqrt(2);
+	
+	private static double[][] seen;
 	
 	private PointLight light;
 	private int discoverRange;
@@ -32,7 +34,7 @@ public class SightRange extends Component {
 		super.init(camera);
 		
 		if (seen == null) {
-			seen = new int[parent.getMap().getWidth()][parent.getMap().getHeight()];
+			seen = new double[parent.getMap().getWidth()][parent.getMap().getHeight()];
 			
 			for (int i = 0; i < seen.length; i++)
 				for (int j = 0; j < seen[0].length; j++)
@@ -61,7 +63,7 @@ public class SightRange extends Component {
 		}
 	}
 
-	private void discover(int x, int y, int range) {
+	private void discover(int x, int y, double range) {
 		if (range <= 0)
 			return;
 		
@@ -89,6 +91,11 @@ public class SightRange extends Component {
 			if (render != null) 
 				Minimap.addObject(render);
 		}
+		
+		discover(x + 1, y + 1, range - SQRT_2);
+		discover(x - 1, y - 1, range - SQRT_2);
+		discover(x - 1, y + 1, range - SQRT_2);
+		discover(x + 1, y - 1, range - SQRT_2);
 		
 		discover(x + 1, y, range - 1);
 		discover(x - 1, y, range - 1);
